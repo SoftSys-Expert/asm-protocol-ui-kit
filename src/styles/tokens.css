@@ -1,0 +1,529 @@
+/* =============================================================================
+   ASM Protocol Design System — Color Palette & Variables
+   Extracted from origin/дизайн branch (ASM Protocol.dc.html)
+   ============================================================================= */
+
+:root {
+  /* =========================================================================
+     Base Colors — CRT Terminal Background & Surface Layers
+     ========================================================================= */
+  --bg-dark: #070a09; /* Primary background (deepest layer) */
+  --bg-secondary: #080c0a; /* Header, footer, gutter */
+  --bg-code: #05100c; /* Code blocks, terminal input */
+  --panel-bg: #0b100e; /* Panels, cards, sidebars */
+  --panel-bg-alt: #0a0f0d; /* Alternate panel (map screen) */
+  --panel-bg-dark: #0a100d; /* Darker panel (completed modules) */
+  --panel-bg-light: #0c1712; /* Lighter panel (active module with glow) */
+
+  /* =========================================================================
+     Borders & Dividers
+     ========================================================================= */
+  --line-primary: #1a2521; /* Primary borders (header, cards) */
+  --line-secondary: #16201c; /* Secondary borders (code blocks) */
+  --line-subtle: #101915; /* Subtle dividers (table rows) */
+  --line-faint: #0f1714; /* Faintest borders (list items) */
+  --line-modal: #24352f; /* Modal/overlay borders */
+
+  /* =========================================================================
+     Accent Green — Primary Interactive Color (CRT Phosphor Glow)
+     ========================================================================= */
+  --acc-primary: #72f2b0; /* Primary accent (buttons, active state) */
+  --acc-bright: #4cff9b; /* Bright variant (Pip-Boy screen) */
+  --acc-dim: #2aae68; /* Dimmed green (inactive tabs) */
+  --acc-medium: #4e8e72; /* Medium green (completed modules) */
+  --acc-dark: #1f6b45; /* Dark green (borders on green bg) */
+  --acc-darker: #0f1a15; /* Darkest green (button bg) */
+  --acc-bg-glow: #13241c; /* Button hover bg (with glow) */
+
+  /* =========================================================================
+     Info Blue — Links, Secondary Actions, Available State
+     ========================================================================= */
+  --info-primary: #68bde7; /* Primary info color (links, available) */
+  --info-hover: #9ad5f2; /* Hover state for links */
+  --info-bright: #b6ffd8; /* Bright info (Matrix variant) */
+
+  /* =========================================================================
+     Warning Yellow/Gold — Hints, Cautions, Resource Warnings
+     ========================================================================= */
+  --warn-primary: #e8b45b; /* Primary warning (hints, resource alerts) */
+  --warn-text: #c9b384; /* Warning text (inside hint blocks) */
+  --warn-dark: #c9a05b; /* Dark warning (locked module text) */
+  --warn-bg: #100e08; /* Warning background (hint panel) */
+
+  /* =========================================================================
+     Error Red — Failures, Errors, SIGSEGV
+     ========================================================================= */
+  --fail-primary: #f47777; /* Primary error (compile errors, SIGSEGV) */
+  --fail-bright: #ff6b6b; /* Bright error (unused in current design) */
+
+  /* =========================================================================
+     Text Colors — Hierarchy from Bright to Dim
+     ========================================================================= */
+  --ink-primary: #dde8e3; /* Brightest text (headings, active labels) */
+  --ink-secondary: #c7d4ce; /* Secondary text (body, buttons) */
+  --ink-tertiary: #b9e9ce; /* Code text (greenish tint) */
+  --ink-medium: #a9b7b1; /* Medium text (explanations) */
+  --ink-dim: #93a29c; /* Dimmed text (secondary info) */
+  --ink-faint: #8fa69c; /* Faint text (terminal echo) */
+  --ink-subtle: #7c8b85; /* Subtle text (meta info) */
+  --ink-muted: #7a8a83; /* Muted text (labels, counts) */
+  --ink-faded: #6e7e77; /* Faded text (disabled, locked) */
+  --ink-ghost: #52625b; /* Ghost text (barely visible hints) */
+
+  /* =========================================================================
+     Terminal-Specific Colors (Pip-Boy, Matrix, Pure TTY variants)
+     ========================================================================= */
+  --term-bg-pipboy: #04120a; /* Pip-Boy screen background */
+  --term-glow-bright: #4cff9b; /* Bright phosphor glow */
+  --term-glow-medium: #2aae68; /* Medium glow */
+  --term-glow-dim: #1f7a4b; /* Dim glow (locked items) */
+  --term-glow-border: #1f6b45; /* Pip-Boy borders */
+  --term-matrix-glow: #0f8; /* Matrix bright green */
+  --term-matrix-mid: #00cc6e; /* Matrix mid green */
+  --term-matrix-dim: #0e8a4e; /* Matrix dim green */
+  --term-matrix-dark: #0a6b3d; /* Matrix dark green (locked) */
+  --term-tty-active: #72f2b0; /* TTY active row */
+  --term-tty-ready: #9fd9f5; /* TTY ready row (blue tint) */
+  --term-tty-border: #2c4a3c; /* TTY box-drawing lines */
+  --term-tty-dark: #2c332b; /* TTY footer/meta text */
+
+  /* =========================================================================
+     Status-Specific Colors (Module States)
+     ========================================================================= */
+
+  /* COMPLETE (green) */
+  --status-complete-bg: #0a100d;
+  --status-complete-border: #2c4a3c;
+  --status-complete-tag: #4e8e72;
+  --status-complete-text: #8fa69c;
+  --status-complete-state: #4e8e72;
+
+  /* IN PROGRESS (bright green with glow) */
+  --status-active-bg: #0c1712;
+  --status-active-border: #72f2b0;
+  --status-active-tag: #72f2b0;
+  --status-active-text: #dde8e3;
+  --status-active-state: #72f2b0;
+  --status-active-glow: rgb(114 242 176 / 18%);
+
+  /* AVAILABLE (blue tint) */
+  --status-avail-bg: #0b100e;
+  --status-avail-border: #24352f;
+  --status-avail-tag: #93a29c;
+  --status-avail-text: #c7d4ce;
+  --status-avail-state: #68bde7;
+
+  /* LOCKED (grey) */
+  --status-locked-bg: #080c0a;
+  --status-locked-border: #16201c;
+  --status-locked-tag: #6e7e77;
+  --status-locked-text: #7a8a83;
+  --status-locked-state: #6e7e77;
+
+  /* =========================================================================
+     Shadow & Glow Effects
+     ========================================================================= */
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 14%);
+  --shadow-modal: 0 24px 80px rgb(0 0 0 / 60%);
+  --shadow-terminal: 0 -20px 70px rgb(0 0 0 / 80%);
+  --glow-primary: 0 0 22px rgb(114 242 176 / 18%);
+  --glow-text: 0 0 24px rgb(114 242 176 / 28%);
+  --glow-bright: 0 0 12px rgb(114 242 176 / 40%);
+  --glow-subtle: 0 0 14px rgb(114 242 176 / 60%);
+  --glow-term: 0 0 50px rgb(114 242 176 / 9%);
+  --glow-active: 0 0 8px rgb(114 242 176 / 80%);
+
+  /* =========================================================================
+     Typography — Font Families
+     ========================================================================= */
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", menlo, consolas, "Liberation Mono",
+    monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* =========================================================================
+     Typography — Sizes (responsive via clamp or base-relative)
+     ========================================================================= */
+  --text-h1: 44px; /* Main hero heading */
+  --text-h2: 26px; /* Section heading */
+  --text-h3: 21px; /* Lesson heading */
+  --text-body-lg: 15px; /* Large body text */
+  --text-body: 14px; /* Default body */
+  --text-body-sm: 13.5px; /* Small body */
+  --text-code: 12.5px; /* Code blocks */
+  --text-label: 11.5px; /* Labels, meta */
+  --text-label-sm: 11px; /* Small labels */
+  --text-caption: 10.5px; /* Captions */
+  --text-caption-sm: 10px; /* Tiny captions */
+  --text-micro: 9.5px; /* Micro text */
+
+  /* =========================================================================
+     Typography — Line Heights
+     ========================================================================= */
+  --lh-tight: 1.08; /* Tight (headings) */
+  --lh-normal: 1.55; /* Normal (body) */
+  --lh-relaxed: 1.65; /* Relaxed (paragraphs) */
+  --lh-loose: 1.7; /* Loose (terminal) */
+  --lh-code: 21px; /* Fixed (code blocks) */
+
+  /* =========================================================================
+     Typography — Letter Spacing
+     ========================================================================= */
+  --ls-tight: -0.01em; /* Tight (large headings) */
+  --ls-normal: 0.02em; /* Normal (code) */
+  --ls-relaxed: 0.06em; /* Relaxed (text) */
+  --ls-loose: 0.1em; /* Loose (labels) */
+  --ls-wide: 0.14em; /* Wide (uppercase labels) */
+  --ls-wider: 0.18em; /* Wider (nav tabs) */
+  --ls-widest: 0.22em; /* Widest (brand, headers) */
+  --ls-ultra: 0.28em; /* Ultra (section tags) */
+
+  /* =========================================================================
+     Layout & Spacing
+     ========================================================================= */
+  --header-height: 46px;
+  --terminal-height: 340px;
+  --module-card-w: 108px;
+  --module-card-h: 64px;
+  --sidebar-w: 260px;
+  --modal-max-w: 720px;
+  --contour-w: 440px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 10px;
+  --gap-xs: 4px;
+  --gap-sm: 8px;
+  --gap-md: 12px;
+  --gap-lg: 18px;
+  --gap-xl: 24px;
+
+  /* =========================================================================
+     Z-Index Layers
+     ========================================================================= */
+  --z-base: 1;
+  --z-crt-grid: 59; /* Pixel grid overlay */
+  --z-crt-vignette: 60; /* Vignette darkening */
+  --z-crt-scanlines: 61; /* Horizontal scanlines */
+  --z-header: 40; /* Sticky header */
+  --z-modal: 70; /* Modals (module details, contour) */
+  --z-terminal: 81; /* Terminal panel */
+  --z-terminal-btn: 80; /* Terminal open button */
+
+  /* =========================================================================
+     Animation Durations & Easings
+     ========================================================================= */
+  --anim-glitch: 0.3s;
+  --anim-blink: 1s;
+  --anim-sweep: 9s;
+  --anim-flick: 7s;
+  --anim-rain: 7s;
+  --ease-glitch: steps(2);
+  --ease-blink: steps(1);
+  --ease-sweep: linear;
+  --ease-rain: linear;
+}
+
+/* =============================================================================
+   Dark Mode Override (if needed for accessibility)
+   ============================================================================= */
+@media (prefers-color-scheme: light) {
+  /* Currently, ASM Protocol has no light mode in the design.
+     This block is reserved for future implementation. */
+}
+
+/* =============================================================================
+   Reduced Motion (accessibility)
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --anim-glitch: 0s;
+    --anim-blink: 0s;
+    --anim-sweep: 0s;
+    --anim-flick: 0s;
+    --anim-rain: 0s;
+  }
+
+  * {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01s !important;
+  }
+}
+
+/* =============================================================================
+   CRT Effects — Reusable Classes
+   ============================================================================= */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-scanlines);
+  pointer-events: none;
+  background-image: repeating-linear-gradient(180deg, rgb(0 0 0 / 22%) 0 1px, transparent 1px 3px);
+  box-shadow:
+    inset 0 0 120px 6px rgb(0 0 0 / 45%),
+    inset 0 0 50px rgb(114 242 176 / 4.5%);
+}
+
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-vignette);
+  pointer-events: none;
+  background-image: radial-gradient(125% 95% at 50% 45%, transparent 64%, rgb(0 0 0 / 50%) 100%);
+}
+
+.crt-sweep {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 220px;
+  z-index: 58;
+  pointer-events: none;
+  animation: sweep var(--anim-sweep) var(--ease-sweep) infinite;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(114 242 176 / 5.5%),
+    rgb(114 242 176 / 2%),
+    transparent
+  );
+}
+
+.crt-grid {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-grid);
+  pointer-events: none;
+  animation: flick var(--anim-flick) var(--ease-blink) infinite;
+  background-image:
+    linear-gradient(90deg, rgb(114 242 176 / 5%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(114 242 176 / 5%) 1px, transparent 1px);
+  background-size: 7px 7px;
+  mix-blend-mode: screen;
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateY(-240px);
+  }
+
+  100% {
+    transform: translateY(105vh);
+  }
+}
+
+@keyframes flick {
+  0%,
+  93% {
+    opacity: 0.5;
+  }
+
+  94% {
+    opacity: 0.3;
+  }
+
+  96% {
+    opacity: 0.66;
+  }
+
+  97% {
+    opacity: 0.38;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* =============================================================================
+   Button Variants — Reusable Classes
+   ============================================================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--acc-darker);
+  border: 1px solid var(--acc-primary);
+  border-radius: var(--radius-md);
+  color: var(--acc-primary);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    animation 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--acc-bg-glow);
+  animation: glitch var(--anim-glitch) var(--ease-glitch) 2;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--line-modal);
+  border-radius: var(--radius-md);
+  color: var(--ink-secondary);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  border-color: #3a4f47;
+  background: #0c120f;
+  animation: glitch var(--anim-glitch) var(--ease-glitch) 2;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  background: none;
+  border: 0;
+  color: var(--info-primary);
+  font: 400 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wide);
+  cursor: pointer;
+}
+
+.btn-link:hover {
+  color: var(--info-hover);
+}
+
+/* =============================================================================
+   Utility Classes
+   ============================================================================= */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.sans {
+  font-family: var(--font-sans);
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.glow-text {
+  text-shadow: var(--glow-text);
+}
+
+.glow-box {
+  box-shadow: var(--glow-primary);
+}
+
+.cursor-blink {
+  animation: blink var(--anim-blink) var(--ease-blink) infinite;
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+
+  20% {
+    transform: translate(-1.5px, 1px);
+    text-shadow:
+      2px 0 var(--fail-primary),
+      -2px 0 var(--info-primary);
+  }
+
+  40% {
+    transform: translate(1.5px, -1px);
+    text-shadow:
+      -2px 0 var(--fail-primary),
+      2px 0 var(--info-primary);
+  }
+
+  60% {
+    transform: translate(-1px, 0);
+    text-shadow:
+      1px 0 var(--acc-primary),
+      -2px 0 var(--info-primary);
+  }
+
+  80% {
+    transform: translate(1px, 1px);
+    text-shadow:
+      -1px 0 var(--fail-primary),
+      2px 0 var(--acc-primary);
+  }
+
+  100% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+}
+
+/* =============================================================================
+   Focus States (accessibility)
+   ============================================================================= */
+:focus-visible {
+  outline: 1px solid var(--info-primary);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 1px solid var(--info-primary);
+  outline-offset: 2px;
+}
+
+/* =============================================================================
+   Print Styles (from dc-runtime PRINT_BASELINE_CSS)
+   ============================================================================= */
+@media print {
+  @page {
+    margin: 0.5cm;
+  }
+
+  figure,
+  table {
+    break-inside: avoid;
+  }
+
+  #dc-root,
+  #dc-root > .sc-host {
+    height: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    backdrop-filter: none !important;
+    animation-delay: -99s !important;
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    animation-fill-mode: both !important;
+    animation-play-state: running !important;
+    transition-duration: 0s !important;
+  }
+}

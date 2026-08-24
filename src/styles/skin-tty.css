@@ -1,0 +1,256 @@
+@import url("./tokens.css");
+
+/* =============================================================================
+   skin-tty: моноширинный аскетизм, box-drawing, 108 колонок
+   ============================================================================= */
+
+/* TTY контейнер (Panel заменяется ASCII-рамкой) */
+.tty-panel {
+  position: relative;
+  padding: 30px 34px;
+  background: #050705;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 22px;
+  white-space: pre;
+  overflow: hidden;
+}
+
+/* Фоновые scanlines (без остальных CRT-эффектов) */
+.tty-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(180deg, rgb(0 0 0 / 30%) 0 1px, transparent 1px 3px);
+}
+
+.tty-panel-content {
+  position: relative;
+}
+
+/* Box-drawing элементы */
+.tty-border-top {
+  color: var(--term-tty-border);
+}
+
+.tty-border-row {
+  color: var(--term-tty-border);
+}
+
+.tty-border-bottom {
+  color: var(--term-tty-border);
+}
+
+.tty-header {
+  color: var(--acc-primary);
+}
+
+.tty-row-complete {
+  color: var(--status-complete-state);
+}
+
+.tty-row-active {
+  color: var(--status-active-state);
+}
+
+.tty-row-ready {
+  color: var(--info-primary);
+}
+
+.tty-row-locked {
+  color: var(--ink-muted);
+}
+
+/* Кнопки (Button) — inline ссылка с символом */
+.tty-btn {
+  display: inline;
+  background: none;
+  border: 0;
+  color: var(--acc-primary);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tty-btn:hover {
+  color: var(--info-hover);
+}
+
+.tty-btn-secondary {
+  color: var(--ink-dim);
+}
+
+.tty-btn-secondary:hover {
+  color: var(--ink-secondary);
+}
+
+/* Блок кода (CodeBlock) — просто моноширинный текст без рамки */
+.tty-codeblock {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 22px;
+  white-space: pre;
+  color: var(--ink-tertiary);
+}
+
+/* Инпут (TextInput) — промпт + строка без border */
+.tty-input {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.tty-input-prompt {
+  color: var(--ink-faded);
+}
+
+.tty-input-field {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--term-tty-border);
+  color: var(--acc-primary);
+  font: inherit;
+  outline: none;
+  padding: 2px 4px;
+}
+
+.tty-input-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--acc-primary);
+  animation: blink var(--anim-blink) var(--ease-blink) infinite;
+}
+
+/* Опции выбора (OptionList) — скобки и индексы */
+.tty-option {
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.tty-option-key {
+  color: var(--ink-muted);
+}
+
+.tty-option.selected .tty-option-key {
+  color: var(--acc-primary);
+}
+
+.tty-option.selected.fail .tty-option-key {
+  color: var(--fail-primary);
+}
+
+.tty-option-text {
+  flex: 1;
+  color: var(--ink-dim);
+}
+
+.tty-option.selected .tty-option-text {
+  color: var(--ink-primary);
+}
+
+.tty-option-mark {
+  color: transparent;
+}
+
+.tty-option.selected .tty-option-mark {
+  color: var(--acc-primary);
+}
+
+.tty-option.selected.fail .tty-option-mark {
+  color: var(--fail-primary);
+}
+
+/* Feedback блок (Feedback) — ASCII box + inline exit-сообщение */
+.tty-feedback {
+  margin-top: 12px;
+}
+
+.tty-feedback-border {
+  color: var(--term-tty-border);
+}
+
+.tty-feedback.pass .tty-feedback-border {
+  color: var(--status-complete-border);
+}
+
+.tty-feedback.fail .tty-feedback-border {
+  color: #3a2222;
+}
+
+.tty-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  font: inherit;
+}
+
+.tty-feedback.pass .tty-feedback-header {
+  color: var(--acc-primary);
+}
+
+.tty-feedback.fail .tty-feedback-header {
+  color: var(--fail-primary);
+}
+
+.tty-feedback-text {
+  color: var(--ink-medium);
+}
+
+.tty-feedback-line {
+  font: inherit;
+}
+
+.tty-feedback.pass .tty-feedback-line {
+  color: var(--acc-primary);
+}
+
+.tty-feedback.fail .tty-feedback-line {
+  color: var(--fail-primary);
+}
+
+/* Badge состояния (Badge) — inline текст со скобками */
+.tty-badge {
+  display: inline;
+  font: inherit;
+}
+
+.tty-badge.complete {
+  color: var(--status-complete-state);
+}
+
+.tty-badge.active {
+  color: var(--status-active-state);
+}
+
+.tty-badge.available {
+  color: var(--status-avail-state);
+}
+
+.tty-badge.locked {
+  color: var(--status-locked-state);
+}
+
+/* ModeSwitch — табы как inline команды */
+.tty-mode-switch {
+  display: flex;
+  gap: 12px;
+}
+
+.tty-mode-tab {
+  background: none;
+  border: 0;
+  color: var(--ink-dim);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tty-mode-tab.active {
+  color: var(--acc-primary);
+}
+
+.tty-mode-tab:hover {
+  color: var(--info-hover);
+}

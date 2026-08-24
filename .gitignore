@@ -1,0 +1,10 @@
+node_modules
+dist
+.histoire
+*.log
+.DS_Store
+.env
+.vscode
+.idea
+*.tgz
+coverage

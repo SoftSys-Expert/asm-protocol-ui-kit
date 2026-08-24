@@ -1,0 +1,384 @@
+@import url("./tokens.css");
+
+/* =============================================================================
+   skin-operator: полнофункциональный терминал с панелями и CRT-эффектами
+   ============================================================================= */
+
+/* CRT фиксированные overlay-слои */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-scanlines);
+  pointer-events: none;
+  background-image: repeating-linear-gradient(180deg, rgb(0 0 0 / 22%) 0 1px, transparent 1px 3px);
+  box-shadow:
+    inset 0 0 120px 6px rgb(0 0 0 / 45%),
+    inset 0 0 50px rgb(114 242 176 / 4.5%);
+}
+
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-vignette);
+  pointer-events: none;
+  background-image: radial-gradient(125% 95% at 50% 45%, transparent 64%, rgb(0 0 0 / 50%) 100%);
+}
+
+.crt-sweep {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 220px;
+  z-index: 58;
+  pointer-events: none;
+  animation: sweep var(--anim-sweep) var(--ease-sweep) infinite;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(114 242 176 / 5.5%),
+    rgb(114 242 176 / 2%),
+    transparent
+  );
+}
+
+.crt-grid {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-crt-grid);
+  pointer-events: none;
+  animation: flick var(--anim-flick) var(--ease-blink) infinite;
+  background-image:
+    linear-gradient(90deg, rgb(114 242 176 / 5%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(114 242 176 / 5%) 1px, transparent 1px);
+  background-size: 7px 7px;
+  mix-blend-mode: screen;
+}
+
+/* Панель (Panel) */
+.operator-panel {
+  border: 1px solid var(--line-primary);
+  border-radius: var(--radius-md);
+  background: var(--panel-bg);
+  overflow: hidden;
+}
+
+.operator-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line-primary);
+  font: 500 10px/1 var(--font-mono);
+  letter-spacing: var(--ls-ultra);
+  color: var(--ink-muted);
+}
+
+.operator-panel-content {
+  padding: 24px 26px 28px;
+}
+
+.operator-panel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line-primary);
+  font: 500 10px/1 var(--font-mono);
+  letter-spacing: var(--ls-normal);
+  color: var(--ink-faint);
+}
+
+/* Кнопки (Button) */
+.operator-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: var(--acc-darker);
+  border: 1px solid var(--acc-primary);
+  border-radius: var(--radius-md);
+  color: var(--acc-primary);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    animation 0.3s;
+}
+
+.operator-btn-primary:hover {
+  background: var(--acc-bg-glow);
+  animation: glitch var(--anim-glitch) var(--ease-glitch) 2;
+}
+
+.operator-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--line-modal);
+  border-radius: var(--radius-md);
+  color: var(--ink-secondary);
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.operator-btn-secondary:hover {
+  border-color: #3a4f47;
+  background: #0c120f;
+  animation: glitch var(--anim-glitch) var(--ease-glitch) 2;
+}
+
+.operator-btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  background: none;
+  border: 0;
+  color: var(--info-primary);
+  font: 400 11px/1 var(--font-mono);
+  letter-spacing: var(--ls-wide);
+  cursor: pointer;
+}
+
+.operator-btn-link:hover {
+  color: var(--info-hover);
+}
+
+/* Блок кода (CodeBlock) */
+.operator-codeblock {
+  display: flex;
+  background: var(--bg-code);
+  border: 1px solid var(--line-secondary);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  line-height: var(--lh-code);
+  overflow-x: auto;
+}
+
+.operator-codeblock-gutter {
+  padding: 12px 0;
+  width: 42px;
+  text-align: right;
+  color: var(--ink-faded);
+  border-right: 1px solid var(--line-subtle);
+}
+
+.operator-codeblock-gutter div {
+  padding-right: 10px;
+}
+
+.operator-codeblock-content {
+  padding: 12px 16px;
+  overflow-x: auto;
+}
+
+.operator-codeblock-line {
+  white-space: pre;
+  color: var(--ink-tertiary);
+}
+
+/* Инпут (TextInput) */
+.operator-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.operator-input-prompt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: var(--ls-normal);
+  color: var(--ink-muted);
+}
+
+.operator-input-field {
+  padding: 10px 12px;
+  background: var(--bg-code);
+  border: 1px solid var(--line-modal);
+  border-radius: var(--radius-md);
+  color: var(--acc-primary);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  letter-spacing: var(--ls-relaxed);
+}
+
+.operator-input-field:focus {
+  outline: 1px solid var(--info-primary);
+  outline-offset: 1px;
+}
+
+/* Опции выбора (OptionList) */
+.operator-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--panel-bg);
+  border: 1px solid var(--line-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background 0.1s,
+    border-color 0.1s;
+}
+
+.operator-option:hover {
+  border-color: var(--acc-primary);
+}
+
+.operator-option.selected {
+  background: #0a130e;
+  border-color: var(--acc-primary);
+}
+
+.operator-option.selected.fail {
+  background: #100a0a;
+  border-color: var(--fail-primary);
+}
+
+.operator-option-key {
+  width: 22px;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--ls-normal);
+  color: var(--ink-muted);
+}
+
+.operator-option.selected .operator-option-key {
+  color: var(--acc-primary);
+}
+
+.operator-option.selected.fail .operator-option-key {
+  color: var(--fail-primary);
+}
+
+.operator-option-text {
+  flex: 1;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-medium);
+}
+
+.operator-option.selected .operator-option-text {
+  color: var(--ink-primary);
+}
+
+.operator-option-mark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-wide);
+  color: transparent;
+}
+
+.operator-option.selected .operator-option-mark {
+  color: var(--acc-primary);
+}
+
+.operator-option.selected.fail .operator-option-mark {
+  color: var(--fail-primary);
+}
+
+/* Feedback блок (Feedback) */
+.operator-feedback {
+  margin-top: 22px;
+  border: 1px solid var(--line-primary);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.operator-feedback.pass {
+  border-color: var(--status-complete-border);
+}
+
+.operator-feedback.fail {
+  border-color: #3a2222;
+}
+
+.operator-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line-secondary);
+  font: 500 10.5px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+}
+
+.operator-feedback.pass .operator-feedback-header {
+  color: var(--acc-primary);
+}
+
+.operator-feedback.fail .operator-feedback-header {
+  color: var(--fail-primary);
+}
+
+.operator-feedback-body {
+  padding: 16px;
+}
+
+.operator-feedback-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-medium);
+  text-wrap: pretty;
+}
+
+.operator-feedback-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.operator-feedback.pass .operator-feedback-line {
+  color: var(--acc-primary);
+}
+
+.operator-feedback.fail .operator-feedback-line {
+  color: var(--fail-primary);
+}
+
+/* Badge состояния модуля (Badge) */
+.operator-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font: 500 9px/1 var(--font-mono);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+
+.operator-badge.complete {
+  background: var(--status-complete-bg);
+  border: 1px solid var(--status-complete-border);
+  color: var(--status-complete-state);
+}
+
+.operator-badge.active {
+  background: var(--status-active-bg);
+  border: 1px solid var(--status-active-border);
+  color: var(--status-active-state);
+  box-shadow: var(--status-active-glow);
+}
+
+.operator-badge.available {
+  background: var(--status-avail-bg);
+  border: 1px solid var(--status-avail-border);
+  color: var(--status-avail-state);
+}
+
+.operator-badge.locked {
+  background: var(--status-locked-bg);
+  border: 1px solid var(--status-locked-border);
+  color: var(--status-locked-state);
+}
