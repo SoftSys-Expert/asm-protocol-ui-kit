@@ -185,6 +185,15 @@
   color: var(--ink-tertiary);
 }
 
+.operator-codeblock-line-hl {
+  white-space: pre;
+  color: var(--acc-primary);
+  background: #08130d;
+  border-left: 2px solid var(--acc-primary);
+  margin-left: -2px;
+  padding-left: 14px;
+}
+
 /* Инпут (TextInput) */
 .operator-input {
   display: inline-flex;
@@ -288,6 +297,15 @@
   color: var(--fail-primary);
 }
 
+.operator-option.disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.operator-option.disabled:hover {
+  border-color: var(--line-primary);
+}
+
 /* Feedback блок (Feedback) */
 .operator-feedback {
   margin-top: 22px;
@@ -381,4 +399,56 @@
   background: var(--status-locked-bg);
   border: 1px solid var(--status-locked-border);
   color: var(--status-locked-state);
+}
+
+.operator-badge-session {
+  background: transparent;
+  border: 1px solid var(--line-modal);
+  color: var(--info-primary);
+}
+
+.operator-badge.fail {
+  background: #100a0a;
+  border: 1px solid #3a2222;
+  color: var(--fail-primary);
+}
+
+.operator-badge.new {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-dark);
+  color: var(--warn-primary);
+}
+
+/* Переключатель режимов (ModeSwitch) */
+.operator-mode-switch {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--bg-code);
+  border: 1px solid var(--line-primary);
+  border-radius: var(--radius-md);
+}
+
+.operator-mode-tab {
+  padding: 8px 16px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--ink-faded);
+  font: 500 10px/1 var(--font-mono);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.1s,
+    background 0.1s;
+}
+
+.operator-mode-tab:hover {
+  color: var(--ink-secondary);
+}
+
+.operator-mode-tab.is-on {
+  background: var(--acc-darker);
+  border: 1px solid var(--acc-primary);
+  color: var(--acc-primary);
 }

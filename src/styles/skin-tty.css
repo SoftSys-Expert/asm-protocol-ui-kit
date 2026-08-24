@@ -94,6 +94,20 @@
   color: var(--ink-tertiary);
 }
 
+.tty-codeblock-prefix {
+  color: var(--ink-faded);
+}
+
+.tty-codeblock-line-hl {
+  color: var(--acc-primary);
+  background: #08130d;
+}
+
+.tty-codeblock-line-hl::before {
+  content: "> ";
+  color: var(--acc-primary);
+}
+
 /* Инпут (TextInput) — промпт + строка без border */
 .tty-input {
   display: flex;
@@ -163,6 +177,15 @@
   color: var(--fail-primary);
 }
 
+.tty-option.disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.tty-option.disabled .tty-option-text {
+  color: var(--ink-faded);
+}
+
 /* Feedback блок (Feedback) — ASCII box + inline exit-сообщение */
 .tty-feedback {
   margin-top: 12px;
@@ -230,6 +253,18 @@
 
 .tty-badge.locked {
   color: var(--status-locked-state);
+}
+
+.tty-badge-session {
+  color: var(--info-primary);
+}
+
+.tty-badge.fail {
+  color: var(--fail-primary);
+}
+
+.tty-badge.new {
+  color: var(--warn-primary);
 }
 
 /* ModeSwitch — табы как inline команды */
