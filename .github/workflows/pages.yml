@@ -2,7 +2,7 @@ name: Deploy Histoire to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
 
 permissions:
@@ -26,9 +26,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build Histoire
+        env:
+          HISTOIRE_BASE: /asm-protocol-ui-kit/
         run: npm run story:build
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
