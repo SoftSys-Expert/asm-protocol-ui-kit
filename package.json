@@ -23,6 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/jsdom": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
     "@typescript-eslint/parser": "^8.67.0",
     "eslint": "^9.18.0",
@@ -43,5 +44,10 @@
     "cyberpunk-terminal"
   ],
   "author": "Konstantin Khlopkov <kokhlo>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@vitest/runner": "^4.1.11",
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.11"
+  }
 }
