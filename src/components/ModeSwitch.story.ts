@@ -1,43 +1,71 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createModeSwitch } from "../core/ModeSwitch";
 
-/**
- * ModeSwitch.story.ts — сегментный переключатель режимов
- * Script Kiddie / Console Cowboy, is-on состояние
- */
 const story: HistoireVanillaStory = {
   title: "ModeSwitch",
-  icon: "carbon:switch",
+  icon: "carbon:modeswitch",
   variants: [
     {
-      id: "operator-modeswitch",
-      title: "Operator ModeSwitch",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div class="operator-mode-switch">
-              <button class="operator-mode-tab is-on" type="button">SCRIPT KIDDIE</button>
-              <button class="operator-mode-tab" type="button">CONSOLE COWBOY</button>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-modeswitch",
-      title: "TTY ModeSwitch",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-              <div class="tty-mode-switch">
-                <button class="tty-mode-tab active" type="button">[script_kiddie]</button>
-                <button class="tty-mode-tab" type="button">[console_cowboy]</button>
-              </div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const instance = createModeSwitch({
+          modes: [
+            { id: "learn", label: "Learn", icon: "📖" },
+            { id: "practice", label: "Practice", icon: "🛠️" },
+          ],
+          active: "learn",
+        });
+        opWrap.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createModeSwitch({
+          modes: [
+            { id: "learn", label: "Learn", icon: "📖" },
+            { id: "practice", label: "Practice", icon: "🛠️" },
+          ],
+          active: "learn",
+        });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],

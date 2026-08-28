@@ -1,69 +1,85 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createModal } from "../core/Modal";
 
-/**
- * Modal.story.ts — модальные диалоги для подтверждений и детальной информации
- * operator: CRT-модалка с glow-border и затемнением
- * tty: ASCII-модалка с box-drawing рамкой
- */
 const story: HistoireVanillaStory = {
   title: "Modal",
   icon: "carbon:modal",
   variants: [
     {
-      id: "operator-modal",
-      title: "Operator Modal (Confirmation)",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div style="position: fixed; inset: 0; background: rgb(7 10 9 / 85%); display: flex; align-items: center; justify-content: center; z-index: var(--z-modal);">
-              <div class="operator-panel" style="max-width: 520px; box-shadow: var(--shadow-modal);">
-                <div class="operator-panel-header">
-                  <span style="color: var(--warn-primary);">CONFIRM_RESET</span>
-                  <span style="color: var(--ink-faint);">M1_L03_POINTER</span>
-                </div>
-                <div class="operator-panel-content">
-                  <div style="font-size: 14px; line-height: 1.6; color: var(--ink-medium); margin-bottom: 20px;">
-                    <p style="margin: 0 0 12px;">Reset lesson progress to initial state?</p>
-                    <p style="margin: 0; color: var(--ink-dim); font-size: 13px;">This action cannot be undone. All completed checks and code submissions will be lost.</p>
-                  </div>
-                  <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                    <button class="operator-btn-secondary">Cancel</button>
-                    <button class="operator-btn-primary" style="border-color: var(--fail-primary); color: var(--fail-primary);">Reset</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-modal",
-      title: "TTY Modal (ASCII Dialog)",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 540px; height: 320px;">
-            <div class="tty-panel-content">
-<div class="tty-border-top">┌─[CONFIRM_RESET]────────────────────────────────────────────────────────────┐</div>
-<div>│</div>
-<div>│  Reset lesson progress to initial state?</div>
-<div>│</div>
-<div>│  <span class="tty-row-locked">[WARNING] This action cannot be undone.</span></div>
-<div>│  <span class="tty-row-locked">All completed checks and code submissions</span></div>
-<div>│  <span class="tty-row-locked">will be lost.</span></div>
-<div>│</div>
-<div>│  ┌─────────────┐  ┌──────────┐</div>
-<div>│  │ <span class="tty-row-active">[RESET]</span>      │  │ [CANCEL] │</div>
-<div>│  └─────────────┘  └──────────┘</div>
-<div>│</div>
-<div>│  [M1_L03_POINTER]</div>
-<div>│</div>
-<div class="tty-border-bottom">└──────────────────────────────────────────────────────────────────────────────┘</div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const content = document.createElement("div");
+        content.textContent = "Reset all progress?";
+        const instance = createModal({
+          title: "Confirm Reset",
+          content,
+          confirmLabel: "Reset",
+          cancelLabel: "Cancel",
+        });
+        const btn = document.createElement("button");
+        btn.textContent = "Open Modal";
+        btn.style.cssText =
+          "padding: 10px 16px; background: var(--acc-darker); border: 1px solid var(--acc-primary); color: var(--acc-primary); font-family: var(--font-mono); cursor: pointer;";
+        btn.addEventListener("click", () => instance.open());
+        opWrap.appendChild(btn);
+        document.body.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyContent = document.createElement("div");
+        ttyContent.textContent = "Reset all progress?";
+        const ttyInstance = createModal({
+          title: "Confirm Reset",
+          content: ttyContent,
+          confirmLabel: "Reset",
+          cancelLabel: "Cancel",
+        });
+        const ttyBtn = document.createElement("button");
+        ttyBtn.textContent = "open modal";
+        ttyBtn.style.cssText =
+          "padding: 0; background: none; border: none; color: var(--acc-primary); font-family: var(--font-mono); text-decoration: underline; cursor: pointer;";
+        ttyBtn.addEventListener("click", () => ttyInstance.open());
+        ttyWrap.appendChild(ttyBtn);
+        document.body.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],

@@ -1,98 +1,67 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createFeedback } from "../core/Feedback";
 
-/**
- * Feedback.story.ts — результат проверки шага
- * ok: «Process exited with code 0» с зелёным бордером
- * fail: «Segmentation fault (core dumped)» красным
- */
 const story: HistoireVanillaStory = {
   title: "Feedback",
-  icon: "carbon:checkmark-outline",
+  icon: "carbon:feedback",
   variants: [
     {
-      id: "operator-feedback-ok",
-      title: "Operator Feedback OK",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div class="operator-feedback pass" style="max-width: 620px;">
-              <div class="operator-feedback-header">
-                <span>PROCESS EXITED WITH CODE 0</span>
-                <span>OK</span>
-              </div>
-              <div class="operator-feedback-body">
-                <p class="operator-feedback-text">
-                  Верно. После второго mov RAX равен 7: перезапись, а не сложение — регистры не аккумулируют.
-                </p>
-                <div class="operator-feedback-line">Process exited with code 0</div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "operator-feedback-fail",
-      title: "Operator Feedback Fail",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div class="operator-feedback fail" style="max-width: 620px;">
-              <div class="operator-feedback-header">
-                <span>SEGMENTATION FAULT (CORE DUMPED)</span>
-                <span>FAIL</span>
-              </div>
-              <div class="operator-feedback-body">
-                <p class="operator-feedback-text">
-                  Не гладко. Разыменование неинициализированного указателя ушло в ядро — адрес не принадлежит процессу.
-                </p>
-                <div class="operator-feedback-line">Segmentation fault (core dumped)</div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-feedback-ok",
-      title: "TTY Feedback OK",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-              <div class="tty-feedback pass">
-                <div class="tty-feedback-border">┌─[RESULT]──────────────────────────────────────────────────────────────┐</div>
-                <div class="tty-feedback-header"><span>PROCESS EXITED WITH CODE 0</span><span>OK</span></div>
-                <div class="tty-feedback-border">├───────────────────────────────────────────────────────────────────────┤</div>
-                <div class="tty-feedback-text">Верно. После второго mov RAX равен 7: перезапись, а не сложение.</div>
-                <div class="tty-feedback-line">Process exited with code 0</div>
-                <div class="tty-feedback-border">└───────────────────────────────────────────────────────────────────────┘</div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-feedback-fail",
-      title: "TTY Feedback Fail",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-              <div class="tty-feedback fail">
-                <div class="tty-feedback-border">┌─[RESULT]──────────────────────────────────────────────────────────────┐</div>
-                <div class="tty-feedback-header"><span>SEGMENTATION FAULT (CORE DUMPED)</span><span>FAIL</span></div>
-                <div class="tty-feedback-border">├───────────────────────────────────────────────────────────────────────┤</div>
-                <div class="tty-feedback-text">Не гладко. Разыменование неинициализированного указателя ушло в ядро.</div>
-                <div class="tty-feedback-line">Segmentation fault (core dumped)</div>
-                <div class="tty-feedback-border">└───────────────────────────────────────────────────────────────────────┘</div>
-              </div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const instance = createFeedback({
+          title: "Correct!",
+          lines: ["Exit code 0", "Output matches expected"],
+          kind: "correct",
+        });
+        opWrap.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createFeedback({
+          title: "Correct!",
+          lines: ["Exit code 0", "Output matches expected"],
+          kind: "correct",
+        });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],
