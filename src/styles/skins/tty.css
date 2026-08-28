@@ -227,7 +227,6 @@
   border-color: var(--acc-dim);
 }
 
-
 [data-skin="tty"] .ui-checkbox--checked .ui-checkbox__box::after {
   content: "x";
   display: block;
@@ -264,7 +263,6 @@
 [data-skin="tty"] .ui-radiogroup__row:hover .ui-radiogroup__dot {
   border-color: var(--acc-dim);
 }
-
 
 [data-skin="tty"] .ui-radiogroup__row--checked .ui-radiogroup__dot::after {
   content: "•";
@@ -356,7 +354,6 @@
 [data-skin="tty"] .ui-toggle:hover:not([disabled]) .ui-toggle__track {
   border-color: var(--acc-dim);
 }
-
 
 [data-skin="tty"] .ui-toggle__thumb {
   background: var(--ink-faded);
@@ -720,7 +717,6 @@
 [data-skin="tty"] .ui-stats__tile[data-tone="accent"] .ui-stats__value {
   color: var(--acc-primary);
 }
-
 
 [data-skin="tty"] .ui-stats__tile[data-tone="info"] {
   border-color: var(--info-primary);
