@@ -70,12 +70,11 @@ export function createModal(props: ModalProps): ModalApi {
 
   function focusables(): HTMLElement[] {
     return Array.from(el.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-      (n) => !n.hasAttribute("disabled") && n.offsetParent !== null,
+      (n) => !n.hasAttribute("disabled") && n.offsetParent !== null
     );
   }
 
-  const FOCUSABLE =
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
   function trap(e: KeyboardEvent) {
     if (e.key !== "Tab") return;

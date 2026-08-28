@@ -70,7 +70,11 @@ describe("core/Feedback", () => {
 describe("core/CodeBlock", () => {
   it("pre>code + копирование", () => {
     sandbox();
-    const cb = createCodeBlock({ code: "mov rax, 1\nret", language: "nasm", showLineNumbers: true });
+    const cb = createCodeBlock({
+      code: "mov rax, 1\nret",
+      language: "nasm",
+      showLineNumbers: true,
+    });
     expect(cb.el.querySelectorAll(".ui-codeblock__line").length).toBe(2);
     expect(cb.el.querySelectorAll(".ui-codeblock__ln").length).toBe(2);
     expect(cb.el.querySelector("code")?.dataset.language).toBe("nasm");
@@ -112,7 +116,12 @@ describe("core/EmptyState / Skeleton", () => {
   it("пустое состояние с action", () => {
     sandbox();
     let acted = false;
-    const es = createEmptyState({ title: "no entries found", hint: "pass a lesson", actionLabel: "GO", onAction: () => (acted = true) });
+    const es = createEmptyState({
+      title: "no entries found",
+      hint: "pass a lesson",
+      actionLabel: "GO",
+      onAction: () => (acted = true),
+    });
     (es.el.querySelector(".ui-emptystate__action") as HTMLButtonElement).click();
     expect(acted).toBe(true);
   });

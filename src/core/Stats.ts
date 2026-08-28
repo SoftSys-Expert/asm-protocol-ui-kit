@@ -49,5 +49,12 @@ export function createStats(props: StatsProps): StatsApi {
   }
   apply();
 
-  return { el, setItems: (items) => { p.items = items; apply(); emit(el, "ui:change", {}); } };
+  return {
+    el,
+    setItems: (items) => {
+      p.items = items;
+      apply();
+      emit(el, "ui:change", {});
+    },
+  };
 }

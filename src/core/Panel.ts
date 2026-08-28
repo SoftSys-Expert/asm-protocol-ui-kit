@@ -28,7 +28,7 @@ export interface PanelApi {
 export function createPanel(props: PanelProps): PanelApi {
   const p = { collapsible: false, collapsed: false, headingLevel: 2, ...props };
   const el = h("section", "ui-panel");
-  let body = h("div", "ui-panel__body");
+  const body = h("div", "ui-panel__body");
 
   const apply = () => {
     el.innerHTML = "";

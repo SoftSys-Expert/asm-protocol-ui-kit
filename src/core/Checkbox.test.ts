@@ -39,9 +39,7 @@ describe("core/Toggle", () => {
     sandbox();
     let v = false;
     const t = createToggle({ label: "x", onChange: (nv) => (v = nv) });
-    t.el.dispatchEvent(
-      new KeyboardEvent("keydown", { key: " ", bubbles: true, cancelable: true }),
-    );
+    t.el.dispatchEvent(new KeyboardEvent("keydown", { key: " ", bubbles: true, cancelable: true }));
     expect(v).toBe(true);
     expect(t.el.getAttribute("aria-checked")).toBe("true");
   });

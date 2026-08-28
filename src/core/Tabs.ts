@@ -35,7 +35,10 @@ export function createTabs(props: TabsProps): TabsApi {
   el.setAttribute("aria-label", "tabs");
 
   const tabs: { btn: HTMLButtonElement; panel: HTMLElement; item: TabItem }[] = [];
-  let active = p.tabs.find((t) => t.id === p.activeId && !t.disabled) ?? p.tabs.find((t) => !t.disabled) ?? p.tabs[0];
+  let active =
+    p.tabs.find((t) => t.id === p.activeId && !t.disabled) ??
+    p.tabs.find((t) => !t.disabled) ??
+    p.tabs[0];
 
   for (const item of p.tabs) {
     const panelId = `${listId}-panel-${item.id}`;

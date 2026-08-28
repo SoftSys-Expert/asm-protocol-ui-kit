@@ -30,9 +30,7 @@ export interface TraceVisualizerApi {
 
 export function createTraceVisualizer(props: TraceVisualizerProps): TraceVisualizerApi {
   const p = { ...props };
-  const regs =
-    p.regOrder ??
-    Array.from(new Set(p.steps.flatMap((s) => Object.keys(s.regs))));
+  const regs = p.regOrder ?? Array.from(new Set(p.steps.flatMap((s) => Object.keys(s.regs))));
   const el = h("div", "ui-trace", { role: "group", "aria-label": "Execution trace" });
   const head = h("div", "ui-trace__head");
   const prevBtn = h("button", "ui-trace__btn", { "aria-label": "Previous step" });

@@ -91,7 +91,8 @@ export function createModeSwitch(props: ModeSwitchProps): ModeSwitchApi {
     const idx = buttons.findIndex((b) => b.btn === btn);
     let next = -1;
     if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % buttons.length;
-    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + buttons.length) % buttons.length;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+      next = (idx - 1 + buttons.length) % buttons.length;
     if (next >= 0) {
       e.preventDefault();
       setActive(buttons[next].mode.id);

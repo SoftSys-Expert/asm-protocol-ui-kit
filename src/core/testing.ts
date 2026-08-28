@@ -58,9 +58,7 @@ export function sandbox(): DomSandbox {
 
 /** Нажатие клавиши (упрощённый хелпер). */
 export function press(el: Element, key: string): void {
-  el.dispatchEvent(
-    new window.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }),
-  );
+  el.dispatchEvent(new window.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }));
 }
 
 /** Клик по элементу. */

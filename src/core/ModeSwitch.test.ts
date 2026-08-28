@@ -76,7 +76,9 @@ describe("core/LessonCard", () => {
 describe("core/HintReveal", () => {
   it("уровни по одному + пометка решения", () => {
     sandbox();
-    const hints = createHintReveal({ hints: ["check rsp", "push before call", "solution: mov rdi, buf"] });
+    const hints = createHintReveal({
+      hints: ["check rsp", "push before call", "solution: mov rdi, buf"],
+    });
     expect(hints.revealedCount()).toBe(0);
     hints.revealNext();
     hints.revealNext();

@@ -19,7 +19,9 @@ describe("core/Modal", () => {
     const m = createModal({ title: "x" });
     m.open();
     expect(m.isOpen()).toBe(true);
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
+    document.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true })
+    );
     expect(m.isOpen()).toBe(false);
   });
 

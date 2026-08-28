@@ -79,7 +79,9 @@ describe("core/TrackMap", () => {
     (items[2] as HTMLElement).click(); // locked
     expect(picked).toEqual(["n1"]);
     tm.setState("n3", "available");
-    expect(tm.el.querySelectorAll(".ui-trackmap__item")[2].getAttribute("data-state")).toBe("available");
+    expect(tm.el.querySelectorAll(".ui-trackmap__item")[2].getAttribute("data-state")).toBe(
+      "available"
+    );
   });
 });
 
@@ -88,9 +90,13 @@ describe("core/SkillsTree", () => {
     sandbox();
     const st = createSkillsTree({
       skills: [
-        { id: "mem", label: "Memory", threshold: 6, current: 6, children: [
-          { id: "stack", label: "Stack ops", threshold: 3, current: 1 },
-        ] },
+        {
+          id: "mem",
+          label: "Memory",
+          threshold: 6,
+          current: 6,
+          children: [{ id: "stack", label: "Stack ops", threshold: 3, current: 1 }],
+        },
       ],
     });
     const items = st.el.querySelectorAll(".ui-skills__item");
@@ -144,7 +150,12 @@ describe("core/ProfileChip", () => {
   it("имя+режим+скин, клик открывает", () => {
     sandbox();
     let opened = 0;
-    const pc = createProfileChip({ name: "kokhlo", mode: "cowboy", skin: "tty", onClick: () => opened++ });
+    const pc = createProfileChip({
+      name: "kokhlo",
+      mode: "cowboy",
+      skin: "tty",
+      onClick: () => opened++,
+    });
     expect(pc.el.querySelector(".ui-profilechip__meta")?.textContent).toBe("cowboy · tty");
     (pc.el as HTMLButtonElement).click();
     expect(opened).toBe(1);
@@ -155,7 +166,11 @@ describe("core/ResumeHero", () => {
   it("CTA RESUME эмитит событие", () => {
     sandbox();
     let resumed = false;
-    const hero = createResumeHero({ lessonId: "heap/003", lessonTitle: "Dynamic alloc", onResume: () => (resumed = true) });
+    const hero = createResumeHero({
+      lessonId: "heap/003",
+      lessonTitle: "Dynamic alloc",
+      onResume: () => (resumed = true),
+    });
     expect(hero.el.querySelector(".ui-resumehero__title")?.textContent).toBe("heap/003");
     (hero.el.querySelector(".ui-resumehero__cta") as HTMLButtonElement).click();
     expect(resumed).toBe(true);
@@ -165,7 +180,12 @@ describe("core/ResumeHero", () => {
 describe("core/CurrentTrackCard", () => {
   it("прогресс по краю карточки", () => {
     sandbox();
-    const card = createCurrentTrackCard({ trackId: "asm", trackName: "x86 ASM", progress: 40, meta: "12/48 lessons" });
+    const card = createCurrentTrackCard({
+      trackId: "asm",
+      trackName: "x86 ASM",
+      progress: 40,
+      meta: "12/48 lessons",
+    });
     expect(card.el.querySelector(".ui-trackcard__name")?.textContent).toBe("x86 ASM");
     card.setProgress(90);
     const track = card.el.querySelector('[role="progressbar"]');

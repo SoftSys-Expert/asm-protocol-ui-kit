@@ -70,7 +70,7 @@ export function createSelect(props: SelectProps): SelectProps extends never ? ne
 
   function apply() {
     const sel = items.find((i) => i.opt.value === value);
-    btnLabel.textContent = sel ? sel.opt.label : p.placeholder ?? "";
+    btnLabel.textContent = sel ? sel.opt.label : (p.placeholder ?? "");
     btn.classList.toggle("ui-select__btn--placeholder", !sel);
     for (const i of items) {
       const selected = i.opt.value === value;
@@ -111,7 +111,11 @@ export function createSelect(props: SelectProps): SelectProps extends never ? ne
   function openList() {
     if (opened) return;
     opened = true;
-    if (activeIdx < 0) activeIdx = Math.max(0, items.findIndex((i) => !i.opt.disabled));
+    if (activeIdx < 0)
+      activeIdx = Math.max(
+        0,
+        items.findIndex((i) => !i.opt.disabled)
+      );
     apply();
     emit(el, "ui:open", {});
   }
@@ -179,7 +183,7 @@ export function createSelect(props: SelectProps): SelectProps extends never ? ne
           clearTimeout(typeAheadTimer);
           typeAheadTimer = setTimeout(() => (typeAheadBuf = ""), 400);
           const found = items.findIndex(
-            (i) => !i.opt.disabled && i.opt.label.toLowerCase().startsWith(typeAheadBuf),
+            (i) => !i.opt.disabled && i.opt.label.toLowerCase().startsWith(typeAheadBuf)
           );
           if (found >= 0) {
             activeIdx = found;

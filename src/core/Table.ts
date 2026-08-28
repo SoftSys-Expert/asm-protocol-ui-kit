@@ -99,7 +99,10 @@ export function createTable<T extends Record<string, unknown>>(props: TableProps
   function applySortAttrs() {
     for (const th of Array.from(thead.querySelectorAll("th"))) {
       const isCur = th.dataset.key === sortKey && th.classList.contains("ui-table__th--sortable");
-      th.setAttribute("aria-sort", isCur ? (sortDir === "asc" ? "ascending" : "descending") : "none");
+      th.setAttribute(
+        "aria-sort",
+        isCur ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+      );
       th.classList.toggle("ui-table__th--sorted", isCur);
     }
   }
@@ -120,13 +123,17 @@ export function createTable<T extends Record<string, unknown>>(props: TableProps
   }
 
   const onActivate = (e: Event) => {
-    const th = (e.target as Element).closest("th.ui-table__th--sortable") as HTMLTableCellElement | null;
+    const th = (e.target as Element).closest(
+      "th.ui-table__th--sortable"
+    ) as HTMLTableCellElement | null;
     if (th && el.contains(th)) sortBy(th.dataset.key ?? "");
   };
   el.addEventListener("click", onActivate);
   const onKey = (e: KeyboardEvent) => {
     if (e.key !== "Enter" && e.key !== " ") return;
-    const th = (e.target as Element).closest("th.ui-table__th--sortable") as HTMLTableCellElement | null;
+    const th = (e.target as Element).closest(
+      "th.ui-table__th--sortable"
+    ) as HTMLTableCellElement | null;
     if (th && el.contains(th)) {
       e.preventDefault();
       sortBy(th.dataset.key ?? "");

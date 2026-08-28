@@ -100,7 +100,10 @@ export function createExerciseSwitcher(props: ExerciseSwitcherProps): ExerciseSw
     setType,
     showFeedback(kind, title, lines) {
       feedbackSlot.innerHTML = "";
-      fb = createBadge({ label: kind === "correct" ? "PASSED" : "FAILED", tone: kind === "correct" ? "success" : "fail" });
+      fb = createBadge({
+        label: kind === "correct" ? "PASSED" : "FAILED",
+        tone: kind === "correct" ? "success" : "fail",
+      });
       feedbackSlot.appendChild(fb.el);
       if (title) {
         const t = h("div", "ui-exercise__feedback-title");

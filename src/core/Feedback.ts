@@ -43,5 +43,11 @@ export function createFeedback(props: FeedbackProps): FeedbackApi {
   }
   apply();
 
-  return { el, setProps: (patch) => { Object.assign(p, patch); apply(); } };
+  return {
+    el,
+    setProps: (patch) => {
+      Object.assign(p, patch);
+      apply();
+    },
+  };
 }

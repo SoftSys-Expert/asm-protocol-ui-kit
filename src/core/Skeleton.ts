@@ -19,7 +19,12 @@ export interface SkeletonApi {
 }
 
 export function createSkeleton(props: SkeletonProps): SkeletonApi {
-  const p = { shape: "line" as NonNullable<SkeletonProps["shape"]>, count: 3, lastWidth: 60, ...props };
+  const p = {
+    shape: "line" as NonNullable<SkeletonProps["shape"]>,
+    count: 3,
+    lastWidth: 60,
+    ...props,
+  };
   const el = h("div", "ui-skeleton", {
     role: "status",
     "aria-label": p.label ?? "Loading",

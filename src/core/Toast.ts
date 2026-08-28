@@ -24,7 +24,9 @@ export interface ToastApi {
   destroy: () => void;
 }
 
-export function createToast(props?: { position?: "bottom-right" | "bottom-left" | "top-right" }): ToastApi {
+export function createToast(props?: {
+  position?: "bottom-right" | "bottom-left" | "top-right";
+}): ToastApi {
   const p = { position: "bottom-right", ...props };
   const el = h("div", "ui-toast-region", {
     role: "region",
