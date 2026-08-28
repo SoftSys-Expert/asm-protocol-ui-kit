@@ -222,7 +222,6 @@
 [data-skin="tty"] .ui-checkbox:hover .ui-checkbox__box {
   border-color: var(--acc-dim);
 }
-
 [data-skin="tty"] .ui-checkbox--checked .ui-checkbox__box {
   border-color: var(--acc-primary);
 }
@@ -259,7 +258,6 @@
 [data-skin="tty"] .ui-radiogroup__row:hover .ui-radiogroup__dot {
   border-color: var(--acc-dim);
 }
-
 [data-skin="tty"] .ui-radiogroup__row--checked .ui-radiogroup__dot {
   border-color: var(--acc-primary);
 }
@@ -350,7 +348,6 @@
 [data-skin="tty"] .ui-toggle:hover:not([disabled]) .ui-toggle__track {
   border-color: var(--acc-dim);
 }
-
 [data-skin="tty"] .ui-toggle--on .ui-toggle__track {
   border-color: var(--acc-primary);
 }
@@ -713,6 +710,9 @@
 [data-skin="tty"] .ui-stats__tile[data-tone="accent"] .ui-stats__value {
   color: var(--acc-primary);
 }
+[data-skin="tty"] .ui-stats__value {
+  color: var(--ink-primary);
+}
 
 [data-skin="tty"] .ui-stats__tile[data-tone="info"] {
   border-color: var(--info-primary);
@@ -741,10 +741,6 @@
 [data-skin="tty"] .ui-stats__label {
   color: var(--ink-muted);
   text-transform: lowercase;
-}
-
-[data-skin="tty"] .ui-stats__value {
-  color: var(--ink-primary);
 }
 
 [data-skin="tty"] .ui-stats__sub {
