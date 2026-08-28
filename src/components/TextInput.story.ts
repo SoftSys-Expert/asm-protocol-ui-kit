@@ -1,46 +1,59 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createTextInput } from "../core/TextInput";
 
-/**
- * TextInput.story.ts — поле ввода с $-промптом
- * operator: панель с рамкой, placeholder «Введите ответ», focus-состояние
- * tty: строка с промптом и курсором-блоком
- */
 const story: HistoireVanillaStory = {
   title: "TextInput",
-  icon: "carbon:input",
+  icon: "carbon:textinput",
   variants: [
     {
-      id: "operator-input",
-      title: "Operator TextInput",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div class="operator-input">
-              <span class="operator-input-prompt">$</span>
-              <input class="operator-input-field" type="text" placeholder="Введите ответ" />
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-input",
-      title: "TTY TextInput (Block Cursor)",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-              <div class="tty-input">
-                <span class="tty-input-prompt">operator@asm:/m1/q2$ </span>
-                <input class="tty-input-field" type="text" placeholder="Введите ответ" />
-                <span class="tty-input-cursor"></span>
-              </div>
-            </div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const instance = createTextInput({ label: "Username", placeholder: "enter username" });
+        opWrap.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createTextInput({ label: "Username", placeholder: "enter username" });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],

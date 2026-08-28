@@ -1,62 +1,69 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createCodeBlock } from "../core/CodeBlock";
 
-/**
- * CodeBlock.story.ts — блок кода с подсветкой строк
- * operator: gutter с номерами + левый бордер у активной строки
- * tty: ASCII-рамка + box-drawing
- */
 const story: HistoireVanillaStory = {
   title: "CodeBlock",
-  icon: "carbon:terminal",
+  icon: "carbon:codeblock",
   variants: [
     {
-      id: "operator-codeblock",
-      title: "Operator CodeBlock",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <div class="operator-codeblock" style="max-width: 620px;">
-              <div class="operator-codeblock-gutter">
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-                <div>4</div>
-                <div>5</div>
-              </div>
-              <div class="operator-codeblock-content">
-                <div class="operator-codeblock-line">section .data</div>
-                <div class="operator-codeblock-line">    msg db "hello, asm", 10</div>
-                <div class="operator-codeblock-line operator-codeblock-line-hl">    len equ $ - msg</div>
-                <div class="operator-codeblock-line">section .text</div>
-                <div class="operator-codeblock-line">    global _start</div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-codeblock",
-      title: "TTY CodeBlock (ASCII Frame)",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-<div class="tty-codeblock">
-<div class="tty-border-top">┌─[src/main.asm]────────────────────────────────────────────────────────┐</div>
-<div><span class="tty-codeblock-prefix">$</span> cat src/main.asm</div>
-<div> 1  section .data</div>
-<div> 2      msg db "hello, asm", 10</div>
-<div class="tty-codeblock-line-hl"> 3      len equ $ - msg</div>
-<div> 4  section .text</div>
-<div> 5      global _start</div>
-<div class="tty-border-bottom">└───────────────────────────────────────────────────────────────────────┘</div>
-</div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const instance = createCodeBlock({
+          code: "mov rax, 42\nret",
+          language: "nasm",
+          showLineNumbers: true,
+          caption: "main.asm",
+        });
+        opWrap.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createCodeBlock({
+          code: "mov rax, 42\nret",
+          language: "nasm",
+          showLineNumbers: true,
+          caption: "main.asm",
+        });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],

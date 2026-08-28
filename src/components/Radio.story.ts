@@ -1,92 +1,71 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createRadioGroup } from "../core/RadioGroup";
 
-/**
- * Radio.story.ts — радио-кнопки для выбора одного варианта из нескольких
- * operator: CRT-radio с glow-border
- * tty: ASCII-radio с круглыми скобками
- */
 const story: HistoireVanillaStory = {
   title: "Radio",
-  icon: "carbon:radio-button",
+  icon: "carbon:radio",
   variants: [
     {
-      id: "operator-radio",
-      title: "Operator Radio Group",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace; display: flex; flex-direction: column; gap: 24px;">
-            <div style="padding: 16px; background: var(--panel-bg); border: 1px solid var(--line-primary); border-radius: var(--radius-md);">
-              <div style="font-size: 10px; letter-spacing: var(--ls-ultra); color: var(--ink-muted); margin-bottom: 12px;">EXECUTION MODE</div>
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
 
-              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--acc-primary); border-radius: 50%; position: relative; cursor: pointer; box-shadow: var(--glow-primary);">
-                  <div style="position: absolute; inset: 4px; background: var(--acc-primary); border-radius: 50%;"></div>
-                </div>
-                <div style="font-size: 13px; color: var(--acc-primary);">Normal execution</div>
-              </div>
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
 
-              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--line-modal); border-radius: 50%; position: relative; cursor: pointer;"></div>
-                <div style="font-size: 13px; color: var(--ink-secondary);">Debug with GDB</div>
-              </div>
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
 
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--line-modal); border-radius: 50%; position: relative; cursor: pointer;"></div>
-                <div style="font-size: 13px; color: var(--ink-secondary);">Step-by-step</div>
-              </div>
-            </div>
+        const instance = createRadioGroup({
+          options: [
+            { value: "1", label: "Easy" },
+            { value: "2", label: "Hard" },
+          ],
+          value: "1",
+        });
+        opWrap.appendChild(instance.el);
 
-            <div style="padding: 16px; background: var(--panel-bg); border: 1px solid var(--line-primary); border-radius: var(--radius-md);">
-              <div style="font-size: 10px; letter-spacing: var(--ls-ultra); color: var(--ink-muted); margin-bottom: 12px;">SYSCALL ABI</div>
+        opContainer.appendChild(opWrap);
 
-              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--line-modal); border-radius: 50%; position: relative; cursor: pointer;"></div>
-                <div style="font-size: 13px; color: var(--ink-secondary);">System V AMD64</div>
-              </div>
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
 
-              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--acc-primary); border-radius: 50%; position: relative; cursor: pointer; box-shadow: var(--glow-primary);">
-                  <div style="position: absolute; inset: 4px; background: var(--acc-primary); border-radius: 50%;"></div>
-                </div>
-                <div style="font-size: 13px; color: var(--acc-primary);">Linux x86-64</div>
-              </div>
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
 
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 18px; height: 18px; border: 2px solid var(--line-modal); border-radius: 50%; position: relative; cursor: pointer;"></div>
-                <div style="font-size: 13px; color: var(--ink-secondary);">BSD</div>
-              </div>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-radio",
-      title: "TTY Radio (Parentheses)",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 580px;">
-            <div class="tty-panel-content">
-<div class="tty-border-top">┌─[RADIO_SELECTION]────────────────────────────────────────────────────────────┐</div>
-<div>│</div>
-<div>│  EXECUTION MODE</div>
-<div>│  <span class="tty-row-active">(●)</span> Normal execution</div>
-<div>│  ( ) Debug with GDB</div>
-<div>│  ( ) Step-by-step</div>
-<div>│</div>
-<div>│  SYSCALL ABI</div>
-<div>│  ( ) System V AMD64</div>
-<div>│  <span class="tty-row-active">(●)</span> Linux x86-64</div>
-<div>│  ( ) BSD</div>
-<div>│</div>
-<div>│  [1-3] Select mode | [4-6] Select ABI | [ENTER] Confirm</div>
-<div>│</div>
-<div class="tty-border-bottom">└──────────────────────────────────────────────────────────────────────────────┘</div>
-            </div>
-          </div>
-        `;
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createRadioGroup({
+          options: [
+            { value: "1", label: "Easy" },
+            { value: "2", label: "Hard" },
+          ],
+          value: "1",
+        });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],
