@@ -41,7 +41,7 @@ jobs:
               var base = '/asm-protocol-ui-kit/';
               var path = location.pathname.replace(/^\/asm-protocol-ui-kit\/?/, '');
               if (path && path !== '404.html') {
-                location.replace(base + 'index.html#/story/' + path);
+                location.replace(base + 'index.html#' + path);
               } else {
                 location.replace(base);
               }
