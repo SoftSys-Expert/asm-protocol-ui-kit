@@ -56,10 +56,10 @@ export function sandbox(): DomSandbox {
   return box;
 }
 
-/** Клавиша на элементе (использует конструкторы активного sandbox). */
-export function press(el: Element, key: string, opts: Record<string, unknown> = {}): void {
+/** Нажатие клавиши (упрощённый хелпер). */
+export function press(el: Element, key: string): void {
   el.dispatchEvent(
-    new KeyboardEvent("keydown", { key, bubbles: true, cancelable: true, ...opts })
+    new window.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }),
   );
 }
 
