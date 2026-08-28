@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ASM Protocol UI Kit</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>
+    // SPA-роутинг на GitHub Pages: редирект на index с сохранением пути
+    var path = window.location.pathname.replace(/^\/asm-protocol-ui-kit\/?/, '');
+    window.location.replace('/asm-protocol-ui-kit/#/story/' + path);
+    // base-редирект для прямых заходов
+    if (path === '404.html' || path === '') { window.location.replace('/asm-protocol-ui-kit/'); }
+  </script>
+</head>
+</html>
