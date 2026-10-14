@@ -1,0 +1,38 @@
+@keyframes shred {
+  0% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+    transform: translateX(calc(var(--fx-glitch-shift) * -1));
+  }
+
+  20% {
+    clip-path: polygon(0 30%, 100% 30%, 100% 62%, 0 62%);
+    transform: translateX(calc(var(--fx-glitch-shift) * 5 / 6));
+  }
+
+  40% {
+    clip-path: polygon(0 62%, 100% 62%, 100% 100%, 0 100%);
+    transform: translateX(calc(var(--fx-glitch-shift) * -7 / 12));
+  }
+
+  55% {
+    clip-path: inset(0);
+    transform: translateX(calc(var(--fx-glitch-shift) * 5 / 12));
+    text-shadow:
+      var(--fx-glitch-rgb) 0 var(--fx-glitch-color-a),
+      calc(var(--fx-glitch-rgb) * -1) 0 var(--fx-glitch-color-b);
+  }
+
+  75% {
+    transform: translateX(calc(var(--fx-glitch-shift) / -6));
+    text-shadow:
+      calc(var(--fx-glitch-rgb) / 2) 0 var(--fx-glitch-color-a),
+      calc(var(--fx-glitch-rgb) / -2) 0 var(--fx-glitch-color-b);
+  }
+
+  100% {
+    clip-path: inset(0);
+    transform: none;
+    text-shadow: none;
+  }
+}

@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "histoire dev",
-    "build": "vite build",
+    "build": "vite build && tsc --declaration --emitDeclarationOnly --declarationMap --outDir dist/types",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
     "preview": "vite preview",
@@ -49,5 +49,18 @@
     "@vitest/runner": "^4.1.11",
     "jsdom": "^30.0.1",
     "vitest": "^4.1.11"
+  },
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles/*": "./dist/styles/*",
+    "./site/*.css": "./dist/site/*.css",
+    "./site/fx": {
+      "types": "./dist/types/site/fx.d.ts",
+      "import": "./dist/fx.js"
+    }
   }
 }

@@ -1,0 +1,34 @@
+body.skin-tty {
+  --bg: #050705;
+  --panel: #070b07;
+  --ink: #d1d8cc;
+  --muted: #91a18a;
+  --green: #b7ce8a;
+  --blue: #b7ce8a;
+  --line: #344230;
+  --sans: var(--mono);
+}
+
+body.skin-tty .screen,
+body.skin-tty .lesson-screen,
+body.skin-tty .account-dialog,
+body.skin-tty .feedback,
+body.skin-tty .hint {
+  animation: none;
+}
+
+body.skin-tty .button,
+body.skin-tty .panel,
+body.skin-tty .catalog,
+body.skin-tty .module-list,
+body.skin-tty .workbench {
+  border-radius: 0;
+}
+
+body.skin-tty .session i {
+  box-shadow: none;
+}
+
+body.skin-tty .topbar {
+  background: var(--bg);
+}

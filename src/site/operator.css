@@ -1,0 +1,123 @@
+/* stylelint-disable color-function-notation -- Preserve legacy sRGB gradient rasterization for zero-pixel parity. */
+
+/* Saved Learning Entry CRT texture: static, visible above the full interface. */
+body.skin-operator::before,
+body.skin-operator::after {
+  position: fixed;
+  inset: 0;
+  z-index: 61;
+  pointer-events: none;
+  content: "";
+}
+
+body.skin-operator::before {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, var(--fx-scan-alpha)) 0 var(--fx-scan-line),
+    transparent var(--fx-scan-line) var(--fx-scan-period)
+  );
+  box-shadow:
+    inset 0 0 var(--fx-crt-inset-radius) var(--fx-crt-inset-spread)
+      rgb(0 0 0 / var(--fx-crt-inset-alpha)),
+    inset 0 0 var(--fx-crt-tint-radius) rgb(var(--fx-glow-rgb) / var(--fx-crt-tint-alpha));
+}
+
+body.skin-operator::after {
+  z-index: 60;
+  background-image: radial-gradient(
+    125% 95% at 50% 45%,
+    transparent var(--fx-vignette-start),
+    rgba(0, 0, 0, var(--fx-vignette-alpha)) 100%
+  );
+}
+
+/* The reference keeps terminal labels precise and limits glow to intentional actions. */
+.topnav button,
+.button,
+.option,
+.account-button,
+.text-link,
+.breadcrumb button,
+.brand {
+  transition:
+    color var(--fx-transition-duration) ease,
+    background-color var(--fx-transition-duration) ease,
+    border-color var(--fx-transition-duration) ease,
+    text-shadow var(--fx-transition-duration) ease,
+    box-shadow var(--fx-transition-duration) ease;
+}
+
+body.skin-operator .brand:hover,
+body.skin-operator .brand:focus-visible,
+body.skin-operator .topnav button:hover:not(:disabled),
+body.skin-operator .topnav button:focus-visible:not(:disabled),
+body.skin-operator .topnav button.is-current {
+  text-shadow: 0 0 var(--fx-glow-text-radius) rgb(var(--fx-glow-rgb) / var(--fx-glow-text-alpha));
+}
+
+body.skin-operator .button:hover:not(:disabled),
+body.skin-operator .button:focus-visible:not(:disabled),
+body.skin-operator .option:hover:not(:disabled),
+body.skin-operator .option:focus-visible:not(:disabled) {
+  text-shadow: 0 0 var(--fx-glow-text-radius) rgb(var(--fx-glow-rgb) / var(--fx-glow-text-alpha));
+}
+
+body.skin-operator .button--primary:hover:not(:disabled),
+body.skin-operator .button--primary:focus-visible:not(:disabled) {
+  border-color: var(--btn-primary-hover-border, var(--green));
+  box-shadow: 0 0 var(--fx-glow-box-radius) rgb(var(--fx-glow-rgb) / var(--fx-glow-box-alpha));
+}
+
+body.skin-operator .button:not(.button--primary):hover:not(:disabled),
+body.skin-operator .account-button:hover:not(:disabled),
+body.skin-operator .account-button:focus-visible:not(:disabled) {
+  border-color: var(--btn-hover-border, var(--site-control-hover-border));
+  color: var(--btn-hover-color, var(--site-ink-fixed));
+}
+
+body.skin-operator .text-link:hover:not(:disabled),
+body.skin-operator .text-link:focus-visible:not(:disabled),
+body.skin-operator .breadcrumb button:hover:not(:disabled),
+body.skin-operator .breadcrumb button:focus-visible:not(:disabled) {
+  color: var(--btn-link-hover-color, var(--site-link-hover));
+}
+
+.brand:focus-visible {
+  outline-offset: 4px;
+}
+
+.topnav button:focus-visible,
+.button:focus-visible,
+.option:focus-visible,
+.account-button:focus-visible,
+.text-link:focus-visible,
+.breadcrumb button:focus-visible {
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topnav button,
+  .button,
+  .option,
+  .account-button,
+  .text-link,
+  .breadcrumb button,
+  .brand {
+    transition: none;
+  }
+}
+
+/* TTY is deliberately flat: no CRT texture or neon action glow. */
+body.skin-tty .button:hover,
+body.skin-tty .button:focus-visible,
+body.skin-tty .option:hover,
+body.skin-tty .option:focus-visible,
+body.skin-tty .brand:hover,
+body.skin-tty .brand:focus-visible,
+body.skin-tty .topnav button:hover,
+body.skin-tty .topnav button:focus-visible,
+body.skin-tty .account-button:hover,
+body.skin-tty .account-button:focus-visible {
+  box-shadow: none;
+  text-shadow: none;
+}

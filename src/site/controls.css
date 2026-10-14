@@ -1,0 +1,42 @@
+/* Explicit overrides preserve the default site and its skin/reduced-motion policy. */
+.button--sm {
+  --btn-height: 32px;
+  --btn-pad-y: 6px;
+  --btn-pad-x: 10px;
+  --btn-font-size: 10px;
+}
+
+.button--lg {
+  --btn-height: 52px;
+  --btn-pad-y: 15px;
+  --btn-pad-x: 22px;
+  --btn-font-size: 13px;
+}
+
+:is([data-fx="off"], [data-fx="static"]),
+:is([data-fx="off"], [data-fx="static"]) *,
+:is([data-fx="off"], [data-fx="static"]) *::before,
+:is([data-fx="off"], [data-fx="static"]) *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+:is([data-fx="off"], [data-fx-glitch="off"])
+  :is(.screen, .lesson-screen, .account-dialog, .feedback, .hint, .exercise) {
+  animation: none !important;
+}
+
+:is([data-fx="off"], [data-fx-crt="off"]) body.skin-operator::before,
+:is([data-fx="off"], [data-fx-crt="off"]) body.skin-operator::after {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+:is([data-fx="off"], [data-fx-glow="off"])
+  :is(.brand, .topnav button, .button, .option, .machine-val, .machine-lamp) {
+  text-shadow: none !important;
+}
+
+:is([data-fx="off"], [data-fx-glow="off"]) :is(.button--primary, .session i) {
+  box-shadow: none !important;
+}

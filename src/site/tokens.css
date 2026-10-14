@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap&subset=cyrillic");
+
+:root {
+  /* Длительность glitch-перехода shred по всему сайту (было 0.4s). */
+  --glitch-duration: var(--fx-glitch-duration);
+  --bg: #070a09;
+  --panel: #0b100e;
+  --line: #1a2521;
+  --ink: #c7d4ce;
+  --muted: #7a8a83;
+  --green: #72f2b0;
+  --blue: #68bde7;
+  --amber: #e8b45b;
+  --red: #f47777;
+  --violet: #c29bf0;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+}
