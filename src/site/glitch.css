@@ -36,3 +36,253 @@
     text-shadow: none;
   }
 }
+
+/* Presets are opt-in. Keep shred and the host skin/motion policy unchanged. */
+html[data-fx-glitch-preset="hard-cut"]
+  body.skin-operator
+  :is(.screen, .lesson-screen, .account-dialog, .feedback, .hint, .exercise) {
+  animation-name: hard-cut;
+}
+
+html[data-fx-glitch-preset="tape-track"]
+  body.skin-operator
+  :is(.screen, .lesson-screen, .account-dialog, .feedback, .hint, .exercise) {
+  animation-name: tape-track;
+}
+
+html[data-fx-glitch-preset="blackout"]
+  body.skin-operator
+  :is(.screen, .lesson-screen, .account-dialog, .feedback, .hint, .exercise) {
+  animation-name: blackout;
+}
+
+@keyframes hard-cut {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+    clip-path: inset(12% 0 64%);
+    transform: translateX(calc(var(--fx-glitch-shift) * -1));
+  }
+
+  25% {
+    clip-path: inset(58% 0 10%);
+    transform: translateX(var(--fx-glitch-shift));
+    filter: invert(0.85);
+  }
+
+  40% {
+    clip-path: inset(30% 0 38%);
+    transform: translateX(calc(var(--fx-glitch-shift) * -0.6));
+    filter: none;
+  }
+
+  55% {
+    clip-path: inset(0);
+    transform: translateX(calc(var(--fx-glitch-shift) * 0.6));
+    filter: brightness(2.4);
+    text-shadow:
+      var(--fx-glitch-rgb) 0 var(--fx-glitch-color-a),
+      calc(var(--fx-glitch-rgb) * -1) 0 var(--fx-glitch-color-b);
+  }
+
+  70% {
+    transform: translateX(calc(var(--fx-glitch-shift) / -3));
+    filter: none;
+  }
+
+  85% {
+    transform: translateX(calc(var(--fx-glitch-shift) / 6));
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0);
+    filter: none;
+    text-shadow: none;
+  }
+}
+
+@keyframes tape-track {
+  0% {
+    clip-path: inset(0 0 78%);
+    transform: translateY(var(--fx-glitch-shift)) skewX(-14deg);
+  }
+
+  20% {
+    clip-path: inset(22% 0 52%);
+    transform: translateY(calc(var(--fx-glitch-shift) * -0.8)) skewX(10deg);
+  }
+
+  40% {
+    clip-path: inset(48% 0 24%);
+    transform: translateY(calc(var(--fx-glitch-shift) / 2)) skewX(-6deg);
+    text-shadow:
+      var(--fx-glitch-rgb) 0 var(--fx-glitch-color-a),
+      calc(var(--fx-glitch-rgb) * -1) 0 var(--fx-glitch-color-b);
+  }
+
+  60% {
+    clip-path: inset(74% 0 0);
+    transform: translateY(calc(var(--fx-glitch-shift) / -4)) skewX(3deg);
+  }
+
+  75% {
+    clip-path: inset(0);
+    transform: translateY(calc(var(--fx-glitch-shift) / 6));
+  }
+
+  100% {
+    clip-path: inset(0);
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+@keyframes blackout {
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+    filter: brightness(0);
+  }
+
+  30% {
+    filter: brightness(3) contrast(2);
+  }
+
+  45% {
+    filter: brightness(0);
+  }
+
+  60% {
+    filter: brightness(2) saturate(0);
+    transform: translateX(calc(var(--fx-glitch-shift) / -2));
+    text-shadow:
+      var(--fx-glitch-rgb) 0 var(--fx-glitch-color-a),
+      calc(var(--fx-glitch-rgb) * -1) 0 var(--fx-glitch-color-b);
+  }
+
+  75% {
+    filter: none;
+    transform: translateX(calc(var(--fx-glitch-shift) / 3));
+  }
+
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+/* The reference presets include a transient corruption layer. It is absent
+   unless explicitly selected, and stays invisible when animation is disabled. */
+html[data-fx-glitch-preset]:not([data-fx="off"], [data-fx="static"], [data-fx-glitch="off"])
+  body.skin-operator
+  .exercise {
+  position: relative;
+}
+
+html[data-fx-glitch-preset]:not([data-fx="off"], [data-fx="static"], [data-fx-glitch="off"])
+  body.skin-operator
+  .exercise::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+  animation-duration: var(--fx-glitch-duration);
+  animation-timing-function: steps(1, end);
+  animation-fill-mode: both;
+}
+
+html[data-fx-glitch-preset="hard-cut"] body.skin-operator .exercise::after {
+  background: repeating-linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--fx-glitch-color-b) 22%, transparent) 0 2px,
+    transparent 2px 6px,
+    color-mix(in srgb, var(--fx-glitch-color-a) 18%, transparent) 6px 7px,
+    transparent 7px 13px
+  );
+  animation-name: bars-flash;
+}
+
+html[data-fx-glitch-preset="tape-track"] body.skin-operator .exercise::after {
+  background: linear-gradient(transparent 35%, var(--fx-glitch-color-b) 45%, transparent 65%);
+  animation-name: track-band;
+}
+
+html[data-fx-glitch-preset="blackout"] body.skin-operator .exercise::after {
+  background: repeating-linear-gradient(90deg, var(--fx-glitch-color-a) 0 1px, transparent 1px 4px);
+  animation-name: noise-flash;
+}
+
+@keyframes bars-flash {
+  0% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 0.25;
+    transform: translateY(calc(var(--fx-glitch-shift) * 0.75));
+  }
+
+  60% {
+    opacity: 0.18;
+    transform: translateY(calc(var(--fx-glitch-shift) * -0.6));
+  }
+
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes track-band {
+  0% {
+    opacity: 0.2;
+    transform: translateY(-26%);
+  }
+
+  25% {
+    transform: translateY(12%);
+  }
+
+  50% {
+    transform: translateY(46%);
+  }
+
+  75% {
+    opacity: 0.16;
+    transform: translateY(78%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+}
+
+@keyframes noise-flash {
+  0%,
+  30%,
+  60%,
+  100% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.15;
+  }
+
+  45% {
+    opacity: 0.12;
+  }
+}

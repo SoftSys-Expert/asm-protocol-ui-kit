@@ -90,3 +90,43 @@ describe("site effects API", () => {
     expect(getFx(b)).toMatchObject({ mode: "on", glow: { enabled: true }, crt: { enabled: true } });
   });
 });
+
+describe("opt-in glitch presets", () => {
+  it.each(["hard-cut", "tape-track", "blackout"] as const)(
+    "round-trips %s without changing independent settings",
+    (preset) => {
+      const root = fixture();
+      expect(getFx(root).glitch.preset).toBe("shred");
+      expect(root.hasAttribute("data-fx-glitch-preset")).toBe(false);
+      setFx(
+        {
+          glitch: { preset, duration: "0.45s", shift: "18px", rgb: "3px" },
+          glow: { enabled: false },
+        },
+        root
+      );
+      expect(root.getAttribute("data-fx-glitch-preset")).toBe(preset);
+      expect(getFx(root).glitch).toMatchObject({
+        preset,
+        duration: "0.45s",
+        shift: "18px",
+        rgb: "3px",
+      });
+      setFx({ glitch: { shift: "24px" } }, root);
+      expect(getFx(root).glitch.preset).toBe(preset);
+      setFx({ glitch: { preset: "shred" } }, root);
+      expect(root.hasAttribute("data-fx-glitch-preset")).toBe(false);
+      expect(getFx(root).glow.enabled).toBe(false);
+      setFx({ glitch: { preset } }, root);
+      resetFx(root);
+      expect(root.hasAttribute("data-fx-glitch-preset")).toBe(false);
+      expect(getFx(root).glitch.preset).toBe("shred");
+      expect(root.getAttribute("style")).toBe("");
+    }
+  );
+  it("reads an unrecognized external attribute as the default", () => {
+    const root = fixture();
+    root.setAttribute("data-fx-glitch-preset", "unknown");
+    expect(getFx(root).glitch.preset).toBe("shred");
+  });
+});

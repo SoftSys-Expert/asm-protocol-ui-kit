@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 /**
  * Histoire vanilla story types
  */

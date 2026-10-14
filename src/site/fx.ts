@@ -1,6 +1,7 @@
 /** Site effects are opt-in styles; importing this module never touches the DOM. */
 export interface GlitchOptions {
   enabled?: boolean;
+  preset?: "shred" | "hard-cut" | "tape-track" | "blackout";
   duration?: string;
   shift?: string;
   rgb?: string;
@@ -54,7 +55,7 @@ export interface FxState {
   crt: Required<CrtOptions>;
 }
 
-type Parameters<T> = { [K in Exclude<keyof T, "enabled">]-?: readonly [string, T[K]] };
+type Parameters<T> = { [K in Exclude<keyof T, "enabled" | "preset">]-?: readonly [string, T[K]] };
 
 const glitch: Parameters<GlitchOptions> = {
   duration: ["--fx-glitch-duration", "0.3s"],
@@ -94,6 +95,10 @@ const transition = "--fx-transition-duration";
 
 /** Patch only supplied settings. CSS lengths/times/colors use ordinary CSS strings. */
 export function setFx(options: FxOptions, root: HTMLElement = document.documentElement): void {
+  if (options.glitch?.preset !== undefined) {
+    if (options.glitch.preset === "shred") root.removeAttribute("data-fx-glitch-preset");
+    else root.setAttribute("data-fx-glitch-preset", options.glitch.preset);
+  }
   if (options.mode !== undefined) root.setAttribute("data-fx", options.mode);
   if (options.transitionDuration !== undefined) {
     root.style.setProperty(transition, options.transitionDuration);
@@ -125,7 +130,15 @@ export function getFx(root: HTMLElement = document.documentElement): FxState {
   return {
     mode: mode === "off" || mode === "static" ? mode : "on",
     transitionDuration: style.getPropertyValue(transition).trim() || "120ms",
-    glitch: { ...read(glitch), enabled: root.getAttribute("data-fx-glitch") !== "off" },
+    glitch: {
+      ...read(glitch),
+      enabled: root.getAttribute("data-fx-glitch") !== "off",
+      preset: ["hard-cut", "tape-track", "blackout"].includes(
+        root.getAttribute("data-fx-glitch-preset") ?? ""
+      )
+        ? root.getAttribute("data-fx-glitch-preset")
+        : "shred",
+    },
     glow: { ...read(glow), enabled: root.getAttribute("data-fx-glow") !== "off" },
     crt: { ...read(crt), enabled: root.getAttribute("data-fx-crt") !== "off" },
   } as FxState;
@@ -134,6 +147,7 @@ export function getFx(root: HTMLElement = document.documentElement): FxState {
 /** Remove API-owned overrides only, revealing the host stylesheet defaults. */
 export function resetFx(root: HTMLElement = document.documentElement): void {
   root.removeAttribute("data-fx");
+  root.removeAttribute("data-fx-glitch-preset");
   root.style.removeProperty(transition);
   for (const group of ["glitch", "glow", "crt"] as const) {
     root.removeAttribute(`data-fx-${group}`);

@@ -333,3 +333,29 @@ HTML-элемент другого документа вторым аргуме�
 | `--btn-step-color` | `var(--green)` | `.bench-btn--step: color` |
 | `--btn-step-width` | `112px` | `.bench-btn--step: min-width` |
 | `--btn-tracking` | `.16em` | `.button: letter-spacing` |
+
+## Витрина
+
+```bash
+npm run story:dev
+# http://localhost:6006/asm-protocol-ui-kit/
+npm run story:build
+```
+
+Каталог Histoire состоит из 11 разделов: **Начало, Основы, Эффекты, Кнопки,
+Переключатели, Ответы, Обратная связь, Карточки и списки, Стенд «Машина», Каркас,
+Формы и диалоги**. Описание подключения и таблица CSS-параметров — в «Начало».
+На страницах доступны настройки Histoire и переключатель operator / tty.
+Hover проверяется наведением, клавиатурный focus-visible — клавишей Tab.
+Варианты ответа, порядок шагов, переключатели и снимки стенда интерактивны.
+
+Примеры в `src/stories/` повторяют DOM сайта и подключают CSS **внутри iframe**:
+`site/sandbox.css` → `styles/tokens.css` → `styles/skin-operator.css` →
+`styles/skin-tty.css` → `site/index.css`. Класс скина стоит на `body`, параметры
+эффектов — на `html`. Фабрики `src/core/` остаются частью экспорта пакета.
+
+Пульт эффектов управляет всеми `--fx-*` через `setFx`, позволяет повторить glitch,
+сбросить изменения и скопировать JS или CSS вместе с атрибутами выключателей.
+Опциональные пресеты: `setFx({ glitch: { preset: "hard-cut" } })`, `"tape-track"`,
+`"blackout"`. `"shred"` убирает атрибут пресета и возвращает исходную анимацию.
+Без вызова API вид сайта не меняется; TTY и reduced-motion сохраняют свою политику.
