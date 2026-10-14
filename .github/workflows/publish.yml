@@ -1,0 +1,37 @@
+name: Publish to npm
+
+# Публикация @asm-protocol/ui-kit по тегу vX.Y.Z через npm Trusted Publishing (OIDC):
+# токенов в секретах нет, npm доверяет этому workflow по настройке на странице пакета.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      # Trusted Publishing требует npm CLI 11.5.1+, в Node 22 идёт npm 10.
+      - run: npm install -g npm@^11.5.1
+
+      - name: Тег совпадает с версией в package.json
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npx vitest run
+
+      # prepublishOnly собирает dist перед упаковкой.
+      - run: npm publish --access public
