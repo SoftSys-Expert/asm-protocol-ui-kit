@@ -29,6 +29,27 @@ jobs:
         env:
           HISTOIRE_BASE: /asm-protocol-ui-kit/
         run: npm run story:build
+      - name: SPA fallback for GitHub Pages routing
+        run: |
+          cat > .histoire/dist/404.html << 'HTML'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <script>
+              // SPA-фолбэк: GitHub Pages отдаёт 404.html на любой неизвестный путь
+              var base = '/asm-protocol-ui-kit/';
+              var path = location.pathname.replace(/^\/asm-protocol-ui-kit\/?/, '');
+              if (path && path !== '404.html') {
+                location.replace(base + 'index.html#' + path);
+              } else {
+                location.replace(base);
+              }
+            </script>
+          </head>
+          <body></body>
+          </html>
+          HTML
       - name: Setup Pages
         uses: actions/configure-pages@v4
         with:
