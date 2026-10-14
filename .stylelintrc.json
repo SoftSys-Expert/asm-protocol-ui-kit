@@ -4,5 +4,26 @@
     "selector-class-pattern": null,
     "custom-property-pattern": null,
     "font-family-name-quotes": null
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/site/**/*.css"
+      ],
+      "rules": {
+        "no-descending-specificity": [
+          null,
+          {
+            "message": "Site cascade order is preserved for exact baseline parity; do not reorder selectors."
+          }
+        ],
+        "no-duplicate-selectors": [
+          null,
+          {
+            "message": "Original site refinements intentionally repeat selectors in cascade order."
+          }
+        ]
+      }
+    }
+  ]
 }

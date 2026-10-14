@@ -1,0 +1,157 @@
+/* Review surfaces use the same quiet controls as the learning content. */
+:root {
+  --text: var(--ink);
+  --text-muted: var(--muted);
+  --border: var(--line);
+  --surface: var(--panel);
+  --accent: var(--green);
+  --warning: var(--amber);
+}
+
+.welcome {
+  padding-top: 64px;
+}
+
+.welcome-grid {
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 48px;
+}
+
+.welcome h1 {
+  max-width: 24ch;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
+.welcome h1 em {
+  display: block;
+}
+
+.topnav .is-current {
+  outline: var(--btn-nav-active-outline, 1px solid var(--site-nav-active-border));
+  outline-offset: -1px;
+  color: var(--btn-nav-active-color, var(--green));
+}
+
+.skin-switch {
+  display: flex;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.skin-switch button {
+  padding: var(--btn-skin-padding);
+  background: var(--btn-skin-bg);
+  border: 0;
+  color: var(--btn-skin-color, var(--muted));
+  font: var(--btn-skin-font, 9px var(--mono));
+  cursor: pointer;
+}
+
+.skin-switch button.is-on {
+  background: var(--btn-skin-active-bg, var(--site-skin-active));
+  color: var(--btn-skin-active-color, var(--green));
+}
+
+.button:disabled,
+.option:disabled {
+  cursor: default;
+}
+
+.button:disabled {
+  opacity: var(--btn-disabled-opacity);
+}
+
+.button,
+.account-button,
+.topnav button {
+  transition:
+    color var(--fx-transition-duration),
+    border-color var(--fx-transition-duration),
+    background-color var(--fx-transition-duration);
+}
+
+.button--primary:hover:not(:disabled) {
+  box-shadow: 0 0 var(--fx-glow-subtle-radius) rgb(var(--fx-glow-rgb) / var(--fx-glow-subtle-alpha));
+}
+
+.account-button:hover,
+.brand:hover {
+  color: var(--green);
+}
+
+.screen,
+.lesson-screen {
+  animation: shred var(--glitch-duration) steps(1, end) both;
+  min-width: 0;
+}
+
+.page-transition {
+  min-width: 0;
+}
+
+.account-dialog,
+.feedback,
+.hint {
+  animation: shred var(--glitch-duration) steps(1, end) both;
+}
+
+.lesson-grid > * {
+  min-width: 0;
+}
+
+.code {
+  max-width: 100%;
+}
+
+.module-row > span:nth-child(2),
+.lesson-row > span:nth-child(2) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.module-row b,
+.lesson-row b {
+  line-height: 1.5;
+}
+
+.option {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 24px;
+  color: var(--muted);
+  font: 10px/1.6 var(--mono);
+  letter-spacing: 0.08em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-meta {
+  display: inline-flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.corpus-source[data-origin="server"],
+.corpus-source[data-origin="cache"] {
+  color: var(--green, var(--site-corpus-fallback));
+}

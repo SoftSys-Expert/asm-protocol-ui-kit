@@ -1,16 +1,47 @@
 {
   "name": "@asm-protocol/ui-kit",
-  "version": "0.1.0",
-  "description": "UI kit for ASM Protocol educational portal — Histoire stories with operator and tty skins",
-  "type": "module",
-  "private": true,
-  "files": [
-    "dist",
-    "src"
+  "version": "0.2.0",
+  "description": "UI kit for the ASM://PROTOCOL learning portal: site styles one-to-one, configurable CRT, glitch and glow effects, operator and tty skins",
+  "keywords": [
+    "ui-kit",
+    "asm-protocol",
+    "histoire",
+    "stories",
+    "cyberpunk-terminal"
   ],
+  "homepage": "https://softsys-expert.github.io/asm-protocol-ui-kit/",
+  "bugs": {
+    "url": "https://github.com/SoftSys-Expert/asm-protocol-ui-kit/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoftSys-Expert/asm-protocol-ui-kit.git"
+  },
+  "license": "MIT",
+  "author": "Konstantin Khlopkov <kokhlo>",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles/*": "./dist/styles/*",
+    "./site/*.css": "./dist/site/*.css",
+    "./site/fx": {
+      "types": "./dist/types/site/fx.d.ts",
+      "import": "./dist/fx.js"
+    }
+  },
   "scripts": {
     "dev": "histoire dev",
-    "build": "vite build",
+    "build": "vite build && tsc -p tsconfig.build.json",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
     "preview": "vite preview",
@@ -20,34 +51,27 @@
     "lint:stylelint": "stylelint \"src/**/*.css\"",
     "format": "prettier --write \"src/**/*.{js,ts,css}\"",
     "lint:fix": "npm run lint:eslint -- --fix && npm run lint:stylelint -- --fix && npm run format",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run lint && npm run typecheck && npx vitest run && npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@types/jsdom": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
     "@typescript-eslint/parser": "^8.67.0",
+    "@vitest/runner": "^4.1.11",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "histoire": "^1.0.0-beta.1",
+    "jsdom": "^30.0.1",
     "prettier": "^3.4.2",
     "stylelint": "^16.14.1",
     "stylelint-config-standard": "^37.0.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.67.0",
-    "vite": "^7.3.0"
-  },
-  "keywords": [
-    "ui-kit",
-    "asm-protocol",
-    "histoire",
-    "stories",
-    "cyberpunk-terminal"
-  ],
-  "author": "Konstantin Khlopkov <kokhlo>",
-  "license": "MIT",
-  "dependencies": {
-    "@vitest/runner": "^4.1.11",
-    "jsdom": "^30.0.1",
+    "vite": "^7.3.0",
     "vitest": "^4.1.11"
   }
 }

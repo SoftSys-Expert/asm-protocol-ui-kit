@@ -1,0 +1,118 @@
+@media (width <= 900px) {
+  .welcome-grid,
+  .two-col,
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-stack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lesson-nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .lesson-nav strong {
+    flex-basis: 100%;
+  }
+
+  .lesson-nav button {
+    width: auto;
+  }
+
+  .catalog-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width <= 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 8px 14px;
+    gap: 7px 10px;
+  }
+
+  .topnav {
+    order: 3;
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .screen,
+  .lesson-screen {
+    padding: 26px 16px 60px;
+  }
+
+  .welcome-grid,
+  .two-col,
+  .lesson-grid,
+  .catalog-row,
+  .value-grid,
+  .info-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-row {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .exercise > h1,
+  .exercise > p,
+  .exercise > .options,
+  .exercise > .answer-box,
+  .exercise > .hint-row,
+  .exercise > .hint,
+  .exercise > .feedback,
+  .exercise > .lesson-intro,
+  .exercise > .answer-submit,
+  .exercise > .code {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .exercise > h1 {
+    font-size: 18px;
+  }
+
+  .workbench-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .answer-box {
+    flex-wrap: wrap;
+  }
+
+  .answer-box input {
+    flex-basis: 100%;
+  }
+
+  .lesson-nav {
+    display: none;
+  }
+
+  .session {
+    font-size: 0;
+  }
+
+  .session i {
+    margin: 4px;
+  }
+
+  .account-button {
+    font-size: 9px;
+  }
+
+  .next-step {
+    padding: 9px 12px;
+  }
+
+  .next-step strong {
+    flex-basis: 100%;
+  }
+}

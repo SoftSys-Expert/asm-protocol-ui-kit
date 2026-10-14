@@ -1,0 +1,269 @@
+.lab-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 46px 24px 72px;
+  color: var(--text, var(--site-ink-fixed));
+}
+
+.lab-page__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.lab-page h1 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 30px;
+  line-height: 1.3;
+  font-weight: 500;
+  margin: 10px 0 14px;
+}
+
+.lab-page__intro,
+.lab-note {
+  color: var(--text-muted, var(--site-sandbox-muted));
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.lab-connection {
+  border: 1px solid var(--border, var(--site-control-border));
+  padding: 14px 18px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.lab-connection p {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--text-muted, var(--site-sandbox-muted));
+  line-height: 1.6;
+}
+
+.lab-connection[data-connected="false"] > span {
+  color: var(--warning, var(--site-warning-fixed));
+}
+
+.lab-connection[data-connected="true"] > span {
+  color: var(--accent, var(--site-accent-fixed));
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.lab-editor,
+.lab-output {
+  border: 1px solid var(--border, var(--site-control-border));
+  background: var(--surface, var(--site-surface-deep));
+  min-width: 0;
+}
+
+.lab-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid var(--border, var(--site-control-border));
+  padding: 10px;
+}
+
+.lab-tabs button {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted, var(--site-sandbox-muted));
+  font:
+    12px "IBM Plex Mono",
+    monospace;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.lab-tabs button[aria-pressed="true"] {
+  color: var(--accent, var(--site-accent-fixed));
+  box-shadow: inset 0 -1px currentcolor;
+}
+
+#sandbox-source {
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  resize: vertical;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text, var(--site-ink-fixed));
+  font:
+    13px/1.85 "IBM Plex Mono",
+    monospace;
+  padding: 22px;
+  tab-size: 4;
+  white-space: pre;
+  overflow: auto;
+}
+
+#sandbox-source:focus-visible {
+  outline: 1px solid var(--accent, var(--site-accent-fixed));
+  outline-offset: -3px;
+}
+
+.lab-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border, var(--site-control-border));
+}
+
+.lab-actions small {
+  font:
+    10px "IBM Plex Mono",
+    monospace;
+  color: var(--text-muted, var(--site-sandbox-muted));
+}
+
+.lab-note {
+  padding: 0 20px 16px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.lab-results {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.lab-result-status {
+  font:
+    11px/1.6 "IBM Plex Mono",
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted, var(--site-sandbox-muted));
+}
+
+.lab-output h2 {
+  font:
+    11px/1.5 "IBM Plex Mono",
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 12px 16px;
+  margin: 0;
+  border-bottom: 1px solid var(--border, var(--site-control-border));
+  color: var(--text-muted, var(--site-sandbox-muted));
+}
+
+.lab-output pre {
+  font:
+    13px/1.65 "IBM Plex Mono",
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 18px;
+  margin: 0;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.lab-empty {
+  font:
+    12px/1.7 "IBM Plex Mono",
+    monospace;
+  padding: 18px;
+  color: var(--text-muted, var(--site-sandbox-muted));
+  margin: 0;
+}
+
+.lab-meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border, var(--site-control-border));
+  font:
+    12px "IBM Plex Mono",
+    monospace;
+  margin: 0;
+}
+
+.lab-meta dt {
+  color: var(--text-muted, var(--site-sandbox-muted));
+}
+
+.lab-meta dd {
+  margin: 0;
+}
+
+.lab-error {
+  color: var(--site-danger-fixed);
+  border: 1px solid var(--site-sandbox-error-border);
+  padding: 16px;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+@media (width <= 900px) {
+  .lab-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .lab-page {
+    padding: 28px 16px 44px;
+  }
+
+  .lab-page__heading {
+    display: block;
+  }
+
+  .lab-page h1 {
+    font-size: 24px;
+  }
+
+  .lab-page__heading > .button {
+    margin-top: 10px;
+  }
+
+  .lab-tabs button {
+    padding: 8px;
+  }
+
+  .lab-actions {
+    padding: 14px;
+  }
+
+  .lab-actions .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+.lab-connection .link-btn {
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  color: var(--accent, var(--site-accent-fixed));
+  font:
+    12px/1.6 "IBM Plex Mono",
+    monospace;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.lab-connection .link-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

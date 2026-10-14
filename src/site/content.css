@@ -1,0 +1,275 @@
+@media (width <= 900px) {
+  .welcome-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .welcome {
+    padding-top: 40px;
+  }
+
+  .skin-switch {
+    margin-left: auto;
+  }
+
+  .session {
+    display: none;
+  }
+}
+
+@media (width <= 640px) {
+  .welcome {
+    padding-top: 36px;
+  }
+
+  .welcome h1 {
+    font-size: 28px;
+  }
+
+  .module-row,
+  .lesson-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .module-row > span:nth-child(2),
+  .lesson-row > span:nth-child(2) {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .status {
+    font-size: 9px;
+    flex-basis: 100%;
+    text-align: right;
+  }
+
+  .hint-row {
+    flex-wrap: wrap;
+  }
+
+  .hint-row small {
+    font-size: 9px;
+    letter-spacing: 0.05em;
+  }
+
+  .account-dialog {
+    padding: 20px;
+  }
+
+  .account-dialog .button {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .workbench-head {
+    line-height: 1.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.entry-note {
+  margin: 11px 0 0;
+  color: var(--muted);
+  font: 11px/1.7 var(--mono);
+}
+
+.material-step {
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.material-step strong {
+  font: 10px/1.5 var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--green);
+}
+
+.material-step p {
+  margin-top: 6px;
+}
+
+.material-note {
+  font-size: 12px !important;
+  padding-top: 8px;
+}
+
+.course-meta {
+  display: block;
+  margin-top: 12px;
+}
+
+.topics-label {
+  display: block;
+  margin-top: 16px;
+}
+
+.prerequisites {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.prerequisites .text-link {
+  margin: 0;
+  text-align: left;
+  letter-spacing: 0;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+.planned-row {
+  opacity: 0.6;
+}
+
+.sample .code {
+  font-size: 11px;
+  max-height: 220px;
+}
+
+.sample p {
+  font-size: 12px;
+}
+
+.answer-box textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 130px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid var(--site-control-border);
+  border-radius: 3px;
+  background: var(--bg);
+  color: var(--green);
+  font: 13px/1.7 var(--mono);
+}
+
+.answer-box:has(textarea) {
+  flex-wrap: wrap;
+}
+
+.answer-box:has(textarea) .button {
+  margin-left: auto;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+.exercise > h1 {
+  max-width: none;
+}
+
+.account-dialog {
+  overflow-y: auto;
+  max-height: 100dvh;
+}
+
+@media (width <= 640px) {
+  .lesson-nav {
+    display: flex;
+    gap: 2px;
+    padding: 8px;
+  }
+
+  .lesson-nav strong {
+    padding-left: 6px;
+  }
+
+  .lesson-nav button {
+    width: auto;
+    padding: 7px 9px;
+  }
+
+  .lesson-nav > .button {
+    font-size: 9px;
+  }
+
+  .topnav {
+    justify-content: space-between;
+  }
+
+  .skin-switch {
+    margin-left: auto;
+  }
+
+  .brand {
+    font-size: 9px;
+  }
+
+  .topbar {
+    gap: 7px;
+  }
+
+  .screen .story {
+    font-size: 13px;
+  }
+
+  .site-footer {
+    padding: 16px;
+  }
+
+  .workbench .code {
+    font-size: 11px;
+  }
+}
+
+/* Keep the exercise controls inside the workbench's content inset. */
+.workbench {
+  padding-bottom: 24px;
+}
+
+.value:nth-child(2) strong {
+  color: var(--blue);
+}
+
+.value:nth-child(3) strong {
+  color: var(--amber);
+}
+
+.material-step {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.material-step p {
+  margin: 0;
+}
+
+.material-step:nth-of-type(2) strong {
+  color: var(--blue);
+}
+
+.material-step:nth-of-type(3) strong {
+  color: var(--muted);
+}
+
+.material-step strong {
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+}
+
+@media (width <= 420px) {
+  .material-step {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+}

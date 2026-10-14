@@ -48,3 +48,6 @@ export { createSkillsTree } from "./core/SkillsTree";
 export { createWeeklyGoal } from "./core/WeeklyGoal";
 export { createQuickHelp } from "./core/QuickHelp";
 export { createGuestPrompt } from "./core/GuestPrompt";
+
+export { setFx, resetFx, getFx } from "./site/fx";
+export type { FxOptions, FxState, GlitchOptions, GlowOptions, CrtOptions } from "./site/fx";
