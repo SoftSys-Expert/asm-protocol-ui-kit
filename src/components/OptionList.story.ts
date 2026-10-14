@@ -1,77 +1,71 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createOptionList } from "../core/OptionList";
 
-/**
- * OptionList.story.ts — варианты ответа с состояниями
- * default / hover (демо через CSS) / selected-correct (зелёный) / selected-wrong (красный) / disabled
- */
 const story: HistoireVanillaStory = {
   title: "OptionList",
-  icon: "carbon:list",
+  icon: "carbon:optionlist",
   variants: [
     {
-      id: "operator-optionlist",
-      title: "Operator OptionList",
+      id: "dual-skin",
+      title: "Operator & TTY",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace; display: flex; flex-direction: column; gap: 10px; max-width: 620px;">
-            <div class="operator-option" role="button" tabindex="0">
-              <span class="operator-option-key">1</span>
-              <span class="operator-option-text">RAX держит 7 — последний mov перезаписал всё</span>
-              <span class="operator-option-mark">✓</span>
-            </div>
-            <div class="operator-option selected" role="button" tabindex="0">
-              <span class="operator-option-key">2</span>
-              <span class="operator-option-text">RAX держит 12 — mov складывает значения</span>
-              <span class="operator-option-mark">✓</span>
-            </div>
-            <div class="operator-option selected fail" role="button" tabindex="0">
-              <span class="operator-option-key">3</span>
-              <span class="operator-option-text">RAX держит 5 — регистры аккумулируют</span>
-              <span class="operator-option-mark">✗</span>
-            </div>
-            <div class="operator-option disabled" role="button" tabindex="-1" aria-disabled="true">
-              <span class="operator-option-key">4</span>
-              <span class="operator-option-text">Вариант недоступен до m2</span>
-              <span class="operator-option-mark">·</span>
-            </div>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-optionlist",
-      title: "TTY OptionList",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div class="tty-panel" style="max-width: 660px;">
-            <div class="tty-panel-content">
-              <div style="display: flex; flex-direction: column; gap: 6px;">
-                <div class="tty-option">
-                  <span class="tty-option-key">[1]</span>
-                  <span class="tty-option-text">RAX держит 7 — последний mov перезаписал всё</span>
-                  <span class="tty-option-mark">✓</span>
-                </div>
-                <div class="tty-option selected">
-                  <span class="tty-option-key">[2]</span>
-                  <span class="tty-option-text">RAX держит 12 — mov складывает значения</span>
-                  <span class="tty-option-mark">✓</span>
-                </div>
-                <div class="tty-option selected fail">
-                  <span class="tty-option-key">[3]</span>
-                  <span class="tty-option-text">RAX держит 5 — регистры аккумулируют</span>
-                  <span class="tty-option-mark">✗</span>
-                </div>
-                <div class="tty-option disabled">
-                  <span class="tty-option-key">[4]</span>
-                  <span class="tty-option-text">Вариант недоступен до m2</span>
-                  <span class="tty-option-mark">·</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const instance = createOptionList({
+          options: [
+            { value: "1", label: "Choose one" },
+            { value: "2", label: "Fill blanks" },
+          ],
+          selected: ["1"],
+        });
+        opWrap.appendChild(instance.el);
+
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText =
+          "display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start;";
+
+        const ttyInstance = createOptionList({
+          options: [
+            { value: "1", label: "Choose one" },
+            { value: "2", label: "Fill blanks" },
+          ],
+          selected: ["1"],
+        });
+        ttyWrap.appendChild(ttyInstance.el);
+
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],

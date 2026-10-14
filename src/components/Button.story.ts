@@ -1,62 +1,63 @@
-import "../styles/skin-operator.css";
-import "../styles/skin-tty.css";
+import "../styles/ui.css";
+import "../styles/skins/operator.css";
+import "../styles/skins/tty.css";
 import type { HistoireVanillaStory } from "../histoire.d";
+import { createButton } from "../core/Button";
 
-/**
- * Button.story.ts — Histoire vanilla story для компонента Button
- */
 const story: HistoireVanillaStory = {
   title: "Button",
   icon: "carbon:button",
   variants: [
     {
-      id: "operator-primary",
-      title: "Operator Primary",
+      id: "all-variants",
+      title: "All Variants (Operator & TTY)",
       onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <button class="operator-btn-primary" type="button">
-              Run
-            </button>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "operator-secondary",
-      title: "Operator Secondary",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <button class="operator-btn-secondary" type="button">
-              Cancel
-            </button>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "operator-link",
-      title: "Operator Link",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #070A09; font-family: 'IBM Plex Mono', monospace;">
-            <button class="operator-btn-link" type="button">
-              Back to map
-            </button>
-          </div>
-        `;
-      },
-    },
-    {
-      id: "tty-link",
-      title: "TTY Link",
-      onMount: ({ el }) => {
-        el.innerHTML = `
-          <div style="padding: 20px; background: #050705; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; line-height: 22px;">
-            <pre style="margin: 0; color: #6E7E77;">operator@asm:/map$ <button class="tty-btn" type="button">cd m1</button><span style="animation: blink 1s steps(1) infinite; color: #72F2B0;">█</span></pre>
-          </div>
-        `;
+        // Operator skin
+        const opContainer = document.createElement("div");
+        opContainer.setAttribute("data-skin", "operator");
+        opContainer.style.cssText = "padding: 20px; margin-bottom: 30px;";
+
+        const opTitle = document.createElement("h3");
+        opTitle.textContent = "Operator Skin";
+        opTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        opContainer.appendChild(opTitle);
+
+        const opWrap = document.createElement("div");
+        opWrap.style.cssText = "display: flex; gap: 12px; flex-wrap: wrap;";
+
+        const primary = createButton({ label: "Run", variant: "primary" });
+        const secondary = createButton({ label: "Cancel", variant: "secondary" });
+        const ghost = createButton({ label: "Reset", variant: "ghost" });
+        const danger = createButton({ label: "Delete", variant: "danger" });
+        const link = createButton({ label: "Back to map", variant: "link" });
+
+        opWrap.append(primary.el, secondary.el, ghost.el, danger.el, link.el);
+        opContainer.appendChild(opWrap);
+
+        // TTY skin
+        const ttyContainer = document.createElement("div");
+        ttyContainer.setAttribute("data-skin", "tty");
+        ttyContainer.style.cssText = "padding: 20px; position: relative;";
+
+        const ttyTitle = document.createElement("h3");
+        ttyTitle.textContent = "tty skin";
+        ttyTitle.style.cssText =
+          "color: var(--acc-primary); margin-bottom: 16px; font-family: var(--font-mono);";
+        ttyContainer.appendChild(ttyTitle);
+
+        const ttyWrap = document.createElement("div");
+        ttyWrap.style.cssText = "display: flex; gap: 12px; flex-wrap: wrap;";
+
+        const ttyPrimary = createButton({ label: "execute", variant: "primary" });
+        const ttySecondary = createButton({ label: "abort", variant: "secondary" });
+        const ttyLink = createButton({ label: "cd ..", variant: "link" });
+
+        ttyWrap.append(ttyPrimary.el, ttySecondary.el, ttyLink.el);
+        ttyContainer.appendChild(ttyWrap);
+
+        el.appendChild(opContainer);
+        el.appendChild(ttyContainer);
       },
     },
   ],
