@@ -1,0 +1,40 @@
+name: Deploy Histoire to asm-protocol.tech
+
+# Витрина UI-kit на стенде: https://asm-protocol.tech/ui-kit/
+# (Caddy отдаёт /var/www/asm-protocol-ui-kit под /ui-kit/; GitHub Pages — pages.yml).
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-stand
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Деплой витрины (202.71.13.244:/var/www/asm-protocol-ui-kit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Histoire (base=/ui-kit/)
+        env:
+          HISTOIRE_BASE: /ui-kit/
+        run: npm run story:build
+      - name: Отправка на сервер (rsync по ключу CI)
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 202.71.13.244 >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" .histoire/dist/ konstantin@202.71.13.244:/var/www/asm-protocol-ui-kit/
+      - name: Смоук
+        run: |
+          curl -fsS -o /dev/null -w '%{http_code}\n' https://asm-protocol.tech/ui-kit/
+          echo "Готово: https://asm-protocol.tech/ui-kit/"
