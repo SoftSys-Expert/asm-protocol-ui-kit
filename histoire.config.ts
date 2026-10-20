@@ -17,8 +17,8 @@ export default defineConfig({
   vite: (viteConfig, { mode, command }) => {
     return {
       ...viteConfig,
-      // Base path for GitHub Pages hosting (subdirectory site)
-      base: "/asm-protocol-ui-kit/",
+      // Base path: GitHub Pages by default, HISTOIRE_BASE overrides for asm-protocol.tech/ui-kit/
+      base: process.env.HISTOIRE_BASE ?? "/asm-protocol-ui-kit/",
       optimizeDeps: {
         ...viteConfig.optimizeDeps,
         exclude: ["@histoire/controls", "@histoire/vendors/vue"],
